@@ -1,0 +1,1059 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>McMapViewer</RootNamespace>
+    <AssemblyName>McMapViewer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Map\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleFace.cs" />
+    <Compile Include="Models\SimpleFaceVertexUV.cs" />
+    <Compile Include="Models\SimpleGeo.cs" />
+    <Compile Include="Models\SimpleUVs.cs" />
+    <Compile Include="Models\SimpleVert.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mapviewer.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="maps\tex\alban_painting.png" />
+    <Content Include="maps\tex\alban_painting_a.png" />
+    <Content Include="maps\tex\anvil_side.png" />
+    <Content Include="maps\tex\anvil_side_a.png" />
+    <Content Include="maps\tex\anvil_top_1.png" />
+    <Content Include="maps\tex\anvil_top_1_a.png" />
+    <Content Include="maps\tex\anvil_top_2.png" />
+    <Content Include="maps\tex\anvil_top_2_a.png" />
+    <Content Include="maps\tex\anvil_top_3.png" />
+    <Content Include="maps\tex\anvil_top_3_a.png" />
+    <Content Include="maps\tex\aztec2_painting.png" />
+    <Content Include="maps\tex\aztec2_painting_a.png" />
+    <Content Include="maps\tex\aztec_painting.png" />
+    <Content Include="maps\tex\aztec_painting_a.png" />
+    <Content Include="maps\tex\beacon.png" />
+    <Content Include="maps\tex\beacon_a.png" />
+    <Content Include="maps\tex\beacon_beam.png" />
+    <Content Include="maps\tex\beacon_beam_a.png" />
+    <Content Include="maps\tex\bedrock.png" />
+    <Content Include="maps\tex\bedrock_a.png" />
+    <Content Include="maps\tex\bed_foot_front.png" />
+    <Content Include="maps\tex\bed_foot_front_a.png" />
+    <Content Include="maps\tex\bed_foot_side.png" />
+    <Content Include="maps\tex\bed_foot_side_a.png" />
+    <Content Include="maps\tex\bed_foot_top.png" />
+    <Content Include="maps\tex\bed_foot_top_a.png" />
+    <Content Include="maps\tex\bed_head_front.png" />
+    <Content Include="maps\tex\bed_head_front_a.png" />
+    <Content Include="maps\tex\bed_head_side.png" />
+    <Content Include="maps\tex\bed_head_side_a.png" />
+    <Content Include="maps\tex\bed_head_top.png" />
+    <Content Include="maps\tex\bed_head_top_a.png" />
+    <Content Include="maps\tex\bomb_painting.png" />
+    <Content Include="maps\tex\bomb_painting_a.png" />
+    <Content Include="maps\tex\book.png" />
+    <Content Include="maps\tex\bookshelf.png" />
+    <Content Include="maps\tex\bookshelf_a.png" />
+    <Content Include="maps\tex\book_a.png" />
+    <Content Include="maps\tex\brewing_stand.png" />
+    <Content Include="maps\tex\brewing_stand_a.png" />
+    <Content Include="maps\tex\brewing_stand_base.png" />
+    <Content Include="maps\tex\brewing_stand_base_a.png" />
+    <Content Include="maps\tex\brick.png" />
+    <Content Include="maps\tex\brick_a.png" />
+    <Content Include="maps\tex\cactus_bottom.png" />
+    <Content Include="maps\tex\cactus_bottom_a.png" />
+    <Content Include="maps\tex\cactus_side.png" />
+    <Content Include="maps\tex\cactus_side_a.png" />
+    <Content Include="maps\tex\cactus_top.png" />
+    <Content Include="maps\tex\cactus_top_a.png" />
+    <Content Include="maps\tex\cake_bottom.png" />
+    <Content Include="maps\tex\cake_bottom_a.png" />
+    <Content Include="maps\tex\cake_inside.png" />
+    <Content Include="maps\tex\cake_inside_a.png" />
+    <Content Include="maps\tex\cake_side.png" />
+    <Content Include="maps\tex\cake_side_a.png" />
+    <Content Include="maps\tex\cake_top.png" />
+    <Content Include="maps\tex\cake_top_a.png" />
+    <Content Include="maps\tex\carrot_crop_1.png" />
+    <Content Include="maps\tex\carrot_crop_1_a.png" />
+    <Content Include="maps\tex\carrot_crop_2.png" />
+    <Content Include="maps\tex\carrot_crop_2_a.png" />
+    <Content Include="maps\tex\carrot_crop_3.png" />
+    <Content Include="maps\tex\carrot_crop_3_a.png" />
+    <Content Include="maps\tex\carrot_crop_4.png" />
+    <Content Include="maps\tex\carrot_crop_4_a.png" />
+    <Content Include="maps\tex\cauldron_feet.png" />
+    <Content Include="maps\tex\cauldron_feet_a.png" />
+    <Content Include="maps\tex\cauldron_inside.png" />
+    <Content Include="maps\tex\cauldron_inside_a.png" />
+    <Content Include="maps\tex\cauldron_side.png" />
+    <Content Include="maps\tex\cauldron_side_a.png" />
+    <Content Include="maps\tex\cauldron_top.png" />
+    <Content Include="maps\tex\cauldron_top_a.png" />
+    <Content Include="maps\tex\chest.png" />
+    <Content Include="maps\tex\chest_a.png" />
+    <Content Include="maps\tex\chest_trapped.png" />
+    <Content Include="maps\tex\chest_trapped_a.png" />
+    <Content Include="maps\tex\clay.png" />
+    <Content Include="maps\tex\clay_a.png" />
+    <Content Include="maps\tex\coal_block.png" />
+    <Content Include="maps\tex\coal_block_a.png" />
+    <Content Include="maps\tex\coal_ore.png" />
+    <Content Include="maps\tex\coal_ore_a.png" />
+    <Content Include="maps\tex\cobblestone.png" />
+    <Content Include="maps\tex\cobblestone_a.png" />
+    <Content Include="maps\tex\cobblestone_mossy.png" />
+    <Content Include="maps\tex\cobblestone_mossy_a.png" />
+    <Content Include="maps\tex\cobweb.png" />
+    <Content Include="maps\tex\cobweb_a.png" />
+    <Content Include="maps\tex\cocoa_plant_1.png" />
+    <Content Include="maps\tex\cocoa_plant_1_a.png" />
+    <Content Include="maps\tex\cocoa_plant_2.png" />
+    <Content Include="maps\tex\cocoa_plant_2_a.png" />
+    <Content Include="maps\tex\cocoa_plant_3.png" />
+    <Content Include="maps\tex\cocoa_plant_3_a.png" />
+    <Content Include="maps\tex\command_side.png" />
+    <Content Include="maps\tex\command_side_a.png" />
+    <Content Include="maps\tex\crops_1.png" />
+    <Content Include="maps\tex\crops_1_a.png" />
+    <Content Include="maps\tex\crops_2.png" />
+    <Content Include="maps\tex\crops_2_a.png" />
+    <Content Include="maps\tex\crops_3.png" />
+    <Content Include="maps\tex\crops_3_a.png" />
+    <Content Include="maps\tex\crops_4.png" />
+    <Content Include="maps\tex\crops_4_a.png" />
+    <Content Include="maps\tex\crops_5.png" />
+    <Content Include="maps\tex\crops_5_a.png" />
+    <Content Include="maps\tex\crops_6.png" />
+    <Content Include="maps\tex\crops_6_a.png" />
+    <Content Include="maps\tex\crops_7.png" />
+    <Content Include="maps\tex\crops_7_a.png" />
+    <Content Include="maps\tex\crops_8.png" />
+    <Content Include="maps\tex\crops_8_a.png" />
+    <Content Include="maps\tex\daylight_sensor_side.png" />
+    <Content Include="maps\tex\daylight_sensor_side_a.png" />
+    <Content Include="maps\tex\daylight_sensor_top.png" />
+    <Content Include="maps\tex\daylight_sensor_top_a.png" />
+    <Content Include="maps\tex\dead_shrub.png" />
+    <Content Include="maps\tex\dead_shrub_a.png" />
+    <Content Include="maps\tex\diamond_block.png" />
+    <Content Include="maps\tex\diamond_block_a.png" />
+    <Content Include="maps\tex\diamond_ore.png" />
+    <Content Include="maps\tex\diamond_ore_a.png" />
+    <Content Include="maps\tex\dirt.png" />
+    <Content Include="maps\tex\dirt_a.png" />
+    <Content Include="maps\tex\dirt_grass_side.png" />
+    <Content Include="maps\tex\dirt_grass_side_a.png" />
+    <Content Include="maps\tex\dirt_grass_top-desert.png" />
+    <Content Include="maps\tex\dirt_grass_top-desert_a.png" />
+    <Content Include="maps\tex\dirt_grass_top-forest.png" />
+    <Content Include="maps\tex\dirt_grass_top-forest_a.png" />
+    <Content Include="maps\tex\dirt_grass_top.png" />
+    <Content Include="maps\tex\dirt_grass_top_a.png" />
+    <Content Include="maps\tex\dirt_mycelium_side.png" />
+    <Content Include="maps\tex\dirt_mycelium_side_a.png" />
+    <Content Include="maps\tex\dirt_mycelium_top.png" />
+    <Content Include="maps\tex\dirt_mycelium_top_a.png" />
+    <Content Include="maps\tex\dirt_podzol_side.png" />
+    <Content Include="maps\tex\dirt_podzol_side_a.png" />
+    <Content Include="maps\tex\dirt_podzol_top.png" />
+    <Content Include="maps\tex\dirt_podzol_top_a.png" />
+    <Content Include="maps\tex\dirt_snow_side.png" />
+    <Content Include="maps\tex\dirt_snow_side_a.png" />
+    <Content Include="maps\tex\dispenser_front.png" />
+    <Content Include="maps\tex\dispenser_front_a.png" />
+    <Content Include="maps\tex\door_iron_bottom.png" />
+    <Content Include="maps\tex\door_iron_bottom_a.png" />
+    <Content Include="maps\tex\door_iron_top.png" />
+    <Content Include="maps\tex\door_iron_top_a.png" />
+    <Content Include="maps\tex\door_wood_bottom.png" />
+    <Content Include="maps\tex\door_wood_bottom_a.png" />
+    <Content Include="maps\tex\door_wood_top.png" />
+    <Content Include="maps\tex\door_wood_top_a.png" />
+    <Content Include="maps\tex\double_plant_fern_bottom.png" />
+    <Content Include="maps\tex\double_plant_fern_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_fern_top.png" />
+    <Content Include="maps\tex\double_plant_fern_top_a.png" />
+    <Content Include="maps\tex\double_plant_grass_bottom.png" />
+    <Content Include="maps\tex\double_plant_grass_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_grass_top.png" />
+    <Content Include="maps\tex\double_plant_grass_top_a.png" />
+    <Content Include="maps\tex\double_plant_paeonia_bottom.png" />
+    <Content Include="maps\tex\double_plant_paeonia_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_paeonia_top.png" />
+    <Content Include="maps\tex\double_plant_paeonia_top_a.png" />
+    <Content Include="maps\tex\double_plant_rose_bottom.png" />
+    <Content Include="maps\tex\double_plant_rose_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_rose_top.png" />
+    <Content Include="maps\tex\double_plant_rose_top_a.png" />
+    <Content Include="maps\tex\double_plant_sunflower_back.png" />
+    <Content Include="maps\tex\double_plant_sunflower_back_a.png" />
+    <Content Include="maps\tex\double_plant_sunflower_bottom.png" />
+    <Content Include="maps\tex\double_plant_sunflower_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_sunflower_front.png" />
+    <Content Include="maps\tex\double_plant_sunflower_front_a.png" />
+    <Content Include="maps\tex\double_plant_sunflower_top.png" />
+    <Content Include="maps\tex\double_plant_sunflower_top_a.png" />
+    <Content Include="maps\tex\double_plant_syringa_bottom.png" />
+    <Content Include="maps\tex\double_plant_syringa_bottom_a.png" />
+    <Content Include="maps\tex\double_plant_syringa_top.png" />
+    <Content Include="maps\tex\double_plant_syringa_top_a.png" />
+    <Content Include="maps\tex\dropper_front.png" />
+    <Content Include="maps\tex\dropper_front_a.png" />
+    <Content Include="maps\tex\emerald_block.png" />
+    <Content Include="maps\tex\emerald_block_a.png" />
+    <Content Include="maps\tex\emerald_ore.png" />
+    <Content Include="maps\tex\emerald_ore_a.png" />
+    <Content Include="maps\tex\enchant_table_bottom.png" />
+    <Content Include="maps\tex\enchant_table_bottom_a.png" />
+    <Content Include="maps\tex\enchant_table_side.png" />
+    <Content Include="maps\tex\enchant_table_side_a.png" />
+    <Content Include="maps\tex\enchant_table_top.png" />
+    <Content Include="maps\tex\enchant_table_top_a.png" />
+    <Content Include="maps\tex\enderchest.png" />
+    <Content Include="maps\tex\enderchest_a.png" />
+    <Content Include="maps\tex\enderdragon_egg.png" />
+    <Content Include="maps\tex\enderdragon_egg_a.png" />
+    <Content Include="maps\tex\endportal.png" />
+    <Content Include="maps\tex\endportal_a.png" />
+    <Content Include="maps\tex\endportal_frame_side.png" />
+    <Content Include="maps\tex\endportal_frame_side_a.png" />
+    <Content Include="maps\tex\endportal_frame_top.png" />
+    <Content Include="maps\tex\endportal_frame_top_a.png" />
+    <Content Include="maps\tex\endstone.png" />
+    <Content Include="maps\tex\endstone_a.png" />
+    <Content Include="maps\tex\eye_of_ender.png" />
+    <Content Include="maps\tex\eye_of_ender_a.png" />
+    <Content Include="maps\tex\farmland_dry.png" />
+    <Content Include="maps\tex\farmland_dry_a.png" />
+    <Content Include="maps\tex\farmland_wet.png" />
+    <Content Include="maps\tex\farmland_wet_a.png" />
+    <Content Include="maps\tex\fern.png" />
+    <Content Include="maps\tex\fern_a.png" />
+    <Content Include="maps\tex\fire.png" />
+    <Content Include="maps\tex\fire_a.png" />
+    <Content Include="maps\tex\flowerpot.png" />
+    <Content Include="maps\tex\flowerpot_a.png" />
+    <Content Include="maps\tex\flower_allium.png" />
+    <Content Include="maps\tex\flower_allium_a.png" />
+    <Content Include="maps\tex\flower_blue_orchid.png" />
+    <Content Include="maps\tex\flower_blue_orchid_a.png" />
+    <Content Include="maps\tex\flower_houstonia.png" />
+    <Content Include="maps\tex\flower_houstonia_a.png" />
+    <Content Include="maps\tex\flower_oxeye_daisy.png" />
+    <Content Include="maps\tex\flower_oxeye_daisy_a.png" />
+    <Content Include="maps\tex\flower_paeonia.png" />
+    <Content Include="maps\tex\flower_paeonia_a.png" />
+    <Content Include="maps\tex\flower_red.png" />
+    <Content Include="maps\tex\flower_red_a.png" />
+    <Content Include="maps\tex\flower_tulip_orange.png" />
+    <Content Include="maps\tex\flower_tulip_orange_a.png" />
+    <Content Include="maps\tex\flower_tulip_pink.png" />
+    <Content Include="maps\tex\flower_tulip_pink_a.png" />
+    <Content Include="maps\tex\flower_tulip_red.png" />
+    <Content Include="maps\tex\flower_tulip_red_a.png" />
+    <Content Include="maps\tex\flower_tulip_white.png" />
+    <Content Include="maps\tex\flower_tulip_white_a.png" />
+    <Content Include="maps\tex\flower_yellow.png" />
+    <Content Include="maps\tex\flower_yellow_a.png" />
+    <Content Include="maps\tex\furnace_front.png" />
+    <Content Include="maps\tex\furnace_front_a.png" />
+    <Content Include="maps\tex\furnace_lit_front.png" />
+    <Content Include="maps\tex\furnace_lit_front_a.png" />
+    <Content Include="maps\tex\furnace_side.png" />
+    <Content Include="maps\tex\furnace_side_a.png" />
+    <Content Include="maps\tex\furnace_top.png" />
+    <Content Include="maps\tex\furnace_top_a.png" />
+    <Content Include="maps\tex\glass.png" />
+    <Content Include="maps\tex\glass_a.png" />
+    <Content Include="maps\tex\glass_black.png" />
+    <Content Include="maps\tex\glass_black_a.png" />
+    <Content Include="maps\tex\glass_blue.png" />
+    <Content Include="maps\tex\glass_blue_a.png" />
+    <Content Include="maps\tex\glass_brown.png" />
+    <Content Include="maps\tex\glass_brown_a.png" />
+    <Content Include="maps\tex\glass_cyan.png" />
+    <Content Include="maps\tex\glass_cyan_a.png" />
+    <Content Include="maps\tex\glass_dark_gray.png" />
+    <Content Include="maps\tex\glass_dark_gray_a.png" />
+    <Content Include="maps\tex\glass_green.png" />
+    <Content Include="maps\tex\glass_green_a.png" />
+    <Content Include="maps\tex\glass_light_blue.png" />
+    <Content Include="maps\tex\glass_light_blue_a.png" />
+    <Content Include="maps\tex\glass_light_gray.png" />
+    <Content Include="maps\tex\glass_light_gray_a.png" />
+    <Content Include="maps\tex\glass_lime.png" />
+    <Content Include="maps\tex\glass_lime_a.png" />
+    <Content Include="maps\tex\glass_magenta.png" />
+    <Content Include="maps\tex\glass_magenta_a.png" />
+    <Content Include="maps\tex\glass_orange.png" />
+    <Content Include="maps\tex\glass_orange_a.png" />
+    <Content Include="maps\tex\glass_pane_side.png" />
+    <Content Include="maps\tex\glass_pane_side_a.png" />
+    <Content Include="maps\tex\glass_pane_side_black.png" />
+    <Content Include="maps\tex\glass_pane_side_black_a.png" />
+    <Content Include="maps\tex\glass_pane_side_blue.png" />
+    <Content Include="maps\tex\glass_pane_side_blue_a.png" />
+    <Content Include="maps\tex\glass_pane_side_brown.png" />
+    <Content Include="maps\tex\glass_pane_side_brown_a.png" />
+    <Content Include="maps\tex\glass_pane_side_cyan.png" />
+    <Content Include="maps\tex\glass_pane_side_cyan_a.png" />
+    <Content Include="maps\tex\glass_pane_side_dark_gray.png" />
+    <Content Include="maps\tex\glass_pane_side_dark_gray_a.png" />
+    <Content Include="maps\tex\glass_pane_side_green.png" />
+    <Content Include="maps\tex\glass_pane_side_green_a.png" />
+    <Content Include="maps\tex\glass_pane_side_light_blue.png" />
+    <Content Include="maps\tex\glass_pane_side_light_blue_a.png" />
+    <Content Include="maps\tex\glass_pane_side_light_gray.png" />
+    <Content Include="maps\tex\glass_pane_side_light_gray_a.png" />
+    <Content Include="maps\tex\glass_pane_side_lime.png" />
+    <Content Include="maps\tex\glass_pane_side_lime_a.png" />
+    <Content Include="maps\tex\glass_pane_side_magenta.png" />
+    <Content Include="maps\tex\glass_pane_side_magenta_a.png" />
+    <Content Include="maps\tex\glass_pane_side_orange.png" />
+    <Content Include="maps\tex\glass_pane_side_orange_a.png" />
+    <Content Include="maps\tex\glass_pane_side_pink.png" />
+    <Content Include="maps\tex\glass_pane_side_pink_a.png" />
+    <Content Include="maps\tex\glass_pane_side_purple.png" />
+    <Content Include="maps\tex\glass_pane_side_purple_a.png" />
+    <Content Include="maps\tex\glass_pane_side_red.png" />
+    <Content Include="maps\tex\glass_pane_side_red_a.png" />
+    <Content Include="maps\tex\glass_pane_side_white.png" />
+    <Content Include="maps\tex\glass_pane_side_white_a.png" />
+    <Content Include="maps\tex\glass_pane_side_yellow.png" />
+    <Content Include="maps\tex\glass_pane_side_yellow_a.png" />
+    <Content Include="maps\tex\glass_pink.png" />
+    <Content Include="maps\tex\glass_pink_a.png" />
+    <Content Include="maps\tex\glass_purple.png" />
+    <Content Include="maps\tex\glass_purple_a.png" />
+    <Content Include="maps\tex\glass_red.png" />
+    <Content Include="maps\tex\glass_red_a.png" />
+    <Content Include="maps\tex\glass_white.png" />
+    <Content Include="maps\tex\glass_white_a.png" />
+    <Content Include="maps\tex\glass_yellow.png" />
+    <Content Include="maps\tex\glass_yellow_a.png" />
+    <Content Include="maps\tex\glowstone.png" />
+    <Content Include="maps\tex\glowstone_a.png" />
+    <Content Include="maps\tex\gold_block.png" />
+    <Content Include="maps\tex\gold_block_a.png" />
+    <Content Include="maps\tex\gold_ore.png" />
+    <Content Include="maps\tex\gold_ore_a.png" />
+    <Content Include="maps\tex\gravel.png" />
+    <Content Include="maps\tex\gravel_a.png" />
+    <Content Include="maps\tex\hardened_clay.png" />
+    <Content Include="maps\tex\hardened_clay_a.png" />
+    <Content Include="maps\tex\hatch.png" />
+    <Content Include="maps\tex\hatch_a.png" />
+    <Content Include="maps\tex\hay_block_side.png" />
+    <Content Include="maps\tex\hay_block_side_a.png" />
+    <Content Include="maps\tex\hay_block_top.png" />
+    <Content Include="maps\tex\hay_block_top_a.png" />
+    <Content Include="maps\tex\hopper_inside.png" />
+    <Content Include="maps\tex\hopper_inside_a.png" />
+    <Content Include="maps\tex\hopper_outside.png" />
+    <Content Include="maps\tex\hopper_outside_a.png" />
+    <Content Include="maps\tex\hopper_top.png" />
+    <Content Include="maps\tex\hopper_top_a.png" />
+    <Content Include="maps\tex\ice.png" />
+    <Content Include="maps\tex\ice_a.png" />
+    <Content Include="maps\tex\ice_packed.png" />
+    <Content Include="maps\tex\ice_packed_a.png" />
+    <Content Include="maps\tex\iron_bars.png" />
+    <Content Include="maps\tex\iron_bars_a.png" />
+    <Content Include="maps\tex\iron_block.png" />
+    <Content Include="maps\tex\iron_block_a.png" />
+    <Content Include="maps\tex\iron_ore.png" />
+    <Content Include="maps\tex\iron_ore_a.png" />
+    <Content Include="maps\tex\jukebox_side.png" />
+    <Content Include="maps\tex\jukebox_side_a.png" />
+    <Content Include="maps\tex\jukebox_top.png" />
+    <Content Include="maps\tex\jukebox_top_a.png" />
+    <Content Include="maps\tex\kebab_painting.png" />
+    <Content Include="maps\tex\kebab_painting_a.png" />
+    <Content Include="maps\tex\ladder.png" />
+    <Content Include="maps\tex\ladder_a.png" />
+    <Content Include="maps\tex\lapis_lazuli_block.png" />
+    <Content Include="maps\tex\lapis_lazuli_block_a.png" />
+    <Content Include="maps\tex\lapis_lazuli_ore.png" />
+    <Content Include="maps\tex\lapis_lazuli_ore_a.png" />
+    <Content Include="maps\tex\largechest.png" />
+    <Content Include="maps\tex\largechest_a.png" />
+    <Content Include="maps\tex\largechest_trapped.png" />
+    <Content Include="maps\tex\largechest_trapped_a.png" />
+    <Content Include="maps\tex\lava.png" />
+    <Content Include="maps\tex\lava_a.png" />
+    <Content Include="maps\tex\lava_flowing.png" />
+    <Content Include="maps\tex\lava_flowing_a.png" />
+    <Content Include="maps\tex\leaves_acacia.png" />
+    <Content Include="maps\tex\leaves_acacia_a.png" />
+    <Content Include="maps\tex\leaves_acacia_opaque.png" />
+    <Content Include="maps\tex\leaves_acacia_opaque_a.png" />
+    <Content Include="maps\tex\leaves_big_oak.png" />
+    <Content Include="maps\tex\leaves_big_oak_a.png" />
+    <Content Include="maps\tex\leaves_big_oak_opaque.png" />
+    <Content Include="maps\tex\leaves_big_oak_opaque_a.png" />
+    <Content Include="maps\tex\leaves_birch.png" />
+    <Content Include="maps\tex\leaves_birch_a.png" />
+    <Content Include="maps\tex\leaves_birch_opaque.png" />
+    <Content Include="maps\tex\leaves_birch_opaque_a.png" />
+    <Content Include="maps\tex\leaves_jungle.png" />
+    <Content Include="maps\tex\leaves_jungle_a.png" />
+    <Content Include="maps\tex\leaves_jungle_opaque.png" />
+    <Content Include="maps\tex\leaves_jungle_opaque_a.png" />
+    <Content Include="maps\tex\leaves_oak.png" />
+    <Content Include="maps\tex\leaves_oak_a.png" />
+    <Content Include="maps\tex\leaves_oak_opaque.png" />
+    <Content Include="maps\tex\leaves_oak_opaque_a.png" />
+    <Content Include="maps\tex\leaves_spruce.png" />
+    <Content Include="maps\tex\leaves_spruce_a.png" />
+    <Content Include="maps\tex\leaves_spruce_opaque.png" />
+    <Content Include="maps\tex\leaves_spruce_opaque_a.png" />
+    <Content Include="maps\tex\lever.png" />
+    <Content Include="maps\tex\lever_a.png" />
+    <Content Include="maps\tex\lilypad.png" />
+    <Content Include="maps\tex\lilypad_a.png" />
+    <Content Include="maps\tex\log_acacia_side.png" />
+    <Content Include="maps\tex\log_acacia_side_a.png" />
+    <Content Include="maps\tex\log_acacia_top.png" />
+    <Content Include="maps\tex\log_acacia_top_a.png" />
+    <Content Include="maps\tex\log_big_oak_side.png" />
+    <Content Include="maps\tex\log_big_oak_side_a.png" />
+    <Content Include="maps\tex\log_big_oak_top.png" />
+    <Content Include="maps\tex\log_big_oak_top_a.png" />
+    <Content Include="maps\tex\log_birch_side.png" />
+    <Content Include="maps\tex\log_birch_side_a.png" />
+    <Content Include="maps\tex\log_birch_top.png" />
+    <Content Include="maps\tex\log_birch_top_a.png" />
+    <Content Include="maps\tex\log_jungle_side.png" />
+    <Content Include="maps\tex\log_jungle_side_a.png" />
+    <Content Include="maps\tex\log_jungle_top.png" />
+    <Content Include="maps\tex\log_jungle_top_a.png" />
+    <Content Include="maps\tex\log_oak_side.png" />
+    <Content Include="maps\tex\log_oak_side_a.png" />
+    <Content Include="maps\tex\log_oak_top.png" />
+    <Content Include="maps\tex\log_oak_top_a.png" />
+    <Content Include="maps\tex\log_spruce_side.png" />
+    <Content Include="maps\tex\log_spruce_side_a.png" />
+    <Content Include="maps\tex\log_spruce_top.png" />
+    <Content Include="maps\tex\log_spruce_top_a.png" />
+    <Content Include="maps\tex\melon_side.png" />
+    <Content Include="maps\tex\melon_side_a.png" />
+    <Content Include="maps\tex\melon_stem_1.png" />
+    <Content Include="maps\tex\melon_stem_1_a.png" />
+    <Content Include="maps\tex\melon_stem_2.png" />
+    <Content Include="maps\tex\melon_stem_2_a.png" />
+    <Content Include="maps\tex\melon_top.png" />
+    <Content Include="maps\tex\melon_top_a.png" />
+    <Content Include="maps\tex\mob_char.png" />
+    <Content Include="maps\tex\mob_char_a.png" />
+    <Content Include="maps\tex\mob_chicken.png" />
+    <Content Include="maps\tex\mob_chicken_a.png" />
+    <Content Include="maps\tex\mob_cow.png" />
+    <Content Include="maps\tex\mob_cow_a.png" />
+    <Content Include="maps\tex\mob_creeper.png" />
+    <Content Include="maps\tex\mob_creeper_a.png" />
+    <Content Include="maps\tex\mob_pig.png" />
+    <Content Include="maps\tex\mob_pig_a.png" />
+    <Content Include="maps\tex\mob_sheep.png" />
+    <Content Include="maps\tex\mob_sheep_a.png" />
+    <Content Include="maps\tex\mob_skeleton.png" />
+    <Content Include="maps\tex\mob_skeleton_a.png" />
+    <Content Include="maps\tex\mob_skeleton_wither.png" />
+    <Content Include="maps\tex\mob_skeleton_wither_a.png" />
+    <Content Include="maps\tex\mob_squid.png" />
+    <Content Include="maps\tex\mob_squid_a.png" />
+    <Content Include="maps\tex\mob_zombie.png" />
+    <Content Include="maps\tex\mob_zombie_a.png" />
+    <Content Include="maps\tex\mushroom_brown.png" />
+    <Content Include="maps\tex\mushroom_brown_a.png" />
+    <Content Include="maps\tex\mushroom_brown_cap.png" />
+    <Content Include="maps\tex\mushroom_brown_cap_a.png" />
+    <Content Include="maps\tex\mushroom_inside.png" />
+    <Content Include="maps\tex\mushroom_inside_a.png" />
+    <Content Include="maps\tex\mushroom_red.png" />
+    <Content Include="maps\tex\mushroom_red_a.png" />
+    <Content Include="maps\tex\mushroom_red_cap.png" />
+    <Content Include="maps\tex\mushroom_red_cap_a.png" />
+    <Content Include="maps\tex\mushroom_stem.png" />
+    <Content Include="maps\tex\mushroom_stem_a.png" />
+    <Content Include="maps\tex\netherrack.png" />
+    <Content Include="maps\tex\netherrack_a.png" />
+    <Content Include="maps\tex\netherwart_1.png" />
+    <Content Include="maps\tex\netherwart_1_a.png" />
+    <Content Include="maps\tex\netherwart_2.png" />
+    <Content Include="maps\tex\netherwart_2_a.png" />
+    <Content Include="maps\tex\netherwart_3.png" />
+    <Content Include="maps\tex\netherwart_3_a.png" />
+    <Content Include="maps\tex\nether_brick.png" />
+    <Content Include="maps\tex\nether_brick_a.png" />
+    <Content Include="maps\tex\nether_quartz_ore.png" />
+    <Content Include="maps\tex\nether_quartz_ore_a.png" />
+    <Content Include="maps\tex\noteblock.png" />
+    <Content Include="maps\tex\noteblock_a.png" />
+    <Content Include="maps\tex\obsidian.png" />
+    <Content Include="maps\tex\obsidian_a.png" />
+    <Content Include="maps\tex\piston_arm.png" />
+    <Content Include="maps\tex\piston_arm_a.png" />
+    <Content Include="maps\tex\piston_arm_sticky.png" />
+    <Content Include="maps\tex\piston_arm_sticky_a.png" />
+    <Content Include="maps\tex\piston_bottom.png" />
+    <Content Include="maps\tex\piston_bottom_a.png" />
+    <Content Include="maps\tex\piston_side.png" />
+    <Content Include="maps\tex\piston_side_a.png" />
+    <Content Include="maps\tex\piston_top.png" />
+    <Content Include="maps\tex\piston_top_a.png" />
+    <Content Include="maps\tex\plank_acacia.png" />
+    <Content Include="maps\tex\plank_acacia_a.png" />
+    <Content Include="maps\tex\plank_big_oak.png" />
+    <Content Include="maps\tex\plank_big_oak_a.png" />
+    <Content Include="maps\tex\plank_birch.png" />
+    <Content Include="maps\tex\plank_birch_a.png" />
+    <Content Include="maps\tex\plank_jungle.png" />
+    <Content Include="maps\tex\plank_jungle_a.png" />
+    <Content Include="maps\tex\plank_oak.png" />
+    <Content Include="maps\tex\plank_oak_a.png" />
+    <Content Include="maps\tex\plank_spruce.png" />
+    <Content Include="maps\tex\plank_spruce_a.png" />
+    <Content Include="maps\tex\plant_painting.png" />
+    <Content Include="maps\tex\plant_painting_a.png" />
+    <Content Include="maps\tex\portal.png" />
+    <Content Include="maps\tex\portal_a.png" />
+    <Content Include="maps\tex\potato_crop_1.png" />
+    <Content Include="maps\tex\potato_crop_1_a.png" />
+    <Content Include="maps\tex\potato_crop_2.png" />
+    <Content Include="maps\tex\potato_crop_2_a.png" />
+    <Content Include="maps\tex\potato_crop_3.png" />
+    <Content Include="maps\tex\potato_crop_3_a.png" />
+    <Content Include="maps\tex\potato_crop_4.png" />
+    <Content Include="maps\tex\potato_crop_4_a.png" />
+    <Content Include="maps\tex\pumpkin_front.png" />
+    <Content Include="maps\tex\pumpkin_front_a.png" />
+    <Content Include="maps\tex\pumpkin_front_lit.png" />
+    <Content Include="maps\tex\pumpkin_front_lit_a.png" />
+    <Content Include="maps\tex\pumpkin_side.png" />
+    <Content Include="maps\tex\pumpkin_side_a.png" />
+    <Content Include="maps\tex\pumpkin_side_lit.png" />
+    <Content Include="maps\tex\pumpkin_stem_1.png" />
+    <Content Include="maps\tex\pumpkin_stem_1_a.png" />
+    <Content Include="maps\tex\pumpkin_stem_2.png" />
+    <Content Include="maps\tex\pumpkin_stem_2_a.png" />
+    <Content Include="maps\tex\pumpkin_top.png" />
+    <Content Include="maps\tex\pumpkin_top_a.png" />
+    <Content Include="maps\tex\pumpkin_top_lit.png" />
+    <Content Include="maps\tex\quartz_bottom.png" />
+    <Content Include="maps\tex\quartz_bottom_a.png" />
+    <Content Include="maps\tex\quartz_side.png" />
+    <Content Include="maps\tex\quartz_side_a.png" />
+    <Content Include="maps\tex\quartz_side_chiseled.png" />
+    <Content Include="maps\tex\quartz_side_chiseled_a.png" />
+    <Content Include="maps\tex\quartz_side_lines.png" />
+    <Content Include="maps\tex\quartz_side_lines_a.png" />
+    <Content Include="maps\tex\quartz_top.png" />
+    <Content Include="maps\tex\quartz_top_a.png" />
+    <Content Include="maps\tex\quartz_top_chiseled.png" />
+    <Content Include="maps\tex\quartz_top_chiseled_a.png" />
+    <Content Include="maps\tex\quartz_top_lines.png" />
+    <Content Include="maps\tex\quartz_top_lines_a.png" />
+    <Content Include="maps\tex\rails.png" />
+    <Content Include="maps\tex\rails_a.png" />
+    <Content Include="maps\tex\rails_activator_off.png" />
+    <Content Include="maps\tex\rails_activator_off_a.png" />
+    <Content Include="maps\tex\rails_activator_on.png" />
+    <Content Include="maps\tex\rails_activator_on_a.png" />
+    <Content Include="maps\tex\rails_curved.png" />
+    <Content Include="maps\tex\rails_curved_a.png" />
+    <Content Include="maps\tex\rails_detector.png" />
+    <Content Include="maps\tex\rails_detector_off.png" />
+    <Content Include="maps\tex\rails_detector_off_a.png" />
+    <Content Include="maps\tex\rails_detector_on.png" />
+    <Content Include="maps\tex\rails_detector_on_a.png" />
+    <Content Include="maps\tex\rails_powered_off.png" />
+    <Content Include="maps\tex\rails_powered_off_a.png" />
+    <Content Include="maps\tex\rails_powered_on.png" />
+    <Content Include="maps\tex\rails_powered_on_a.png" />
+    <Content Include="maps\tex\redstone_block.png" />
+    <Content Include="maps\tex\redstone_block_a.png" />
+    <Content Include="maps\tex\redstone_comparator_off.png" />
+    <Content Include="maps\tex\redstone_comparator_off_a.png" />
+    <Content Include="maps\tex\redstone_comparator_on.png" />
+    <Content Include="maps\tex\redstone_comparator_on_a.png" />
+    <Content Include="maps\tex\redstone_dust_off.png" />
+    <Content Include="maps\tex\redstone_dust_off_a.png" />
+    <Content Include="maps\tex\redstone_dust_on.png" />
+    <Content Include="maps\tex\redstone_dust_on_a.png" />
+    <Content Include="maps\tex\redstone_lamp_off.png" />
+    <Content Include="maps\tex\redstone_lamp_off_a.png" />
+    <Content Include="maps\tex\redstone_lamp_on.png" />
+    <Content Include="maps\tex\redstone_lamp_on_a.png" />
+    <Content Include="maps\tex\redstone_ore.png" />
+    <Content Include="maps\tex\redstone_ore_a.png" />
+    <Content Include="maps\tex\redstone_repeater_off.png" />
+    <Content Include="maps\tex\redstone_repeater_off_a.png" />
+    <Content Include="maps\tex\redstone_repeater_on.png" />
+    <Content Include="maps\tex\redstone_repeater_on_a.png" />
+    <Content Include="maps\tex\redstone_torch_off.png" />
+    <Content Include="maps\tex\redstone_torch_off_a.png" />
+    <Content Include="maps\tex\redstone_torch_on.png" />
+    <Content Include="maps\tex\redstone_torch_on_a.png" />
+    <Content Include="maps\tex\redstone_wire_off.png" />
+    <Content Include="maps\tex\redstone_wire_off_a.png" />
+    <Content Include="maps\tex\redstone_wire_on.png" />
+    <Content Include="maps\tex\redstone_wire_on_a.png" />
+    <Content Include="maps\tex\red_sand.png" />
+    <Content Include="maps\tex\red_sand_a.png" />
+    <Content Include="maps\tex\sand.png" />
+    <Content Include="maps\tex\sandstone_bottom.png" />
+    <Content Include="maps\tex\sandstone_bottom_a.png" />
+    <Content Include="maps\tex\sandstone_side.png" />
+    <Content Include="maps\tex\sandstone_side_a.png" />
+    <Content Include="maps\tex\sandstone_side_carved.png" />
+    <Content Include="maps\tex\sandstone_side_carved_a.png" />
+    <Content Include="maps\tex\sandstone_side_smooth.png" />
+    <Content Include="maps\tex\sandstone_side_smooth_a.png" />
+    <Content Include="maps\tex\sandstone_top.png" />
+    <Content Include="maps\tex\sandstone_top_a.png" />
+    <Content Include="maps\tex\sand_a.png" />
+    <Content Include="maps\tex\sapling_acacia.png" />
+    <Content Include="maps\tex\sapling_acacia_a.png" />
+    <Content Include="maps\tex\sapling_birch.png" />
+    <Content Include="maps\tex\sapling_birch_a.png" />
+    <Content Include="maps\tex\sapling_jungle.png" />
+    <Content Include="maps\tex\sapling_jungle_a.png" />
+    <Content Include="maps\tex\sapling_oak.png" />
+    <Content Include="maps\tex\sapling_oak_a.png" />
+    <Content Include="maps\tex\sapling_roofed_oak.png" />
+    <Content Include="maps\tex\sapling_roofed_oak_a.png" />
+    <Content Include="maps\tex\sapling_spruce.png" />
+    <Content Include="maps\tex\sapling_spruce_a.png" />
+    <Content Include="maps\tex\sign.png" />
+    <Content Include="maps\tex\sign_a.png" />
+    <Content Include="maps\tex\snow.png" />
+    <Content Include="maps\tex\snow_a.png" />
+    <Content Include="maps\tex\soulsand.png" />
+    <Content Include="maps\tex\soulsand_a.png" />
+    <Content Include="maps\tex\spawner.png" />
+    <Content Include="maps\tex\spawner_a.png" />
+    <Content Include="maps\tex\sponge.png" />
+    <Content Include="maps\tex\sponge_a.png" />
+    <Content Include="maps\tex\stained_clay_black.png" />
+    <Content Include="maps\tex\stained_clay_black_a.png" />
+    <Content Include="maps\tex\stained_clay_blue.png" />
+    <Content Include="maps\tex\stained_clay_blue_a.png" />
+    <Content Include="maps\tex\stained_clay_brown.png" />
+    <Content Include="maps\tex\stained_clay_brown_a.png" />
+    <Content Include="maps\tex\stained_clay_cyan.png" />
+    <Content Include="maps\tex\stained_clay_cyan_a.png" />
+    <Content Include="maps\tex\stained_clay_dark_gray.png" />
+    <Content Include="maps\tex\stained_clay_dark_gray_a.png" />
+    <Content Include="maps\tex\stained_clay_green.png" />
+    <Content Include="maps\tex\stained_clay_green_a.png" />
+    <Content Include="maps\tex\stained_clay_light_blue.png" />
+    <Content Include="maps\tex\stained_clay_light_blue_a.png" />
+    <Content Include="maps\tex\stained_clay_light_gray.png" />
+    <Content Include="maps\tex\stained_clay_light_gray_a.png" />
+    <Content Include="maps\tex\stained_clay_lime.png" />
+    <Content Include="maps\tex\stained_clay_lime_a.png" />
+    <Content Include="maps\tex\stained_clay_magenta.png" />
+    <Content Include="maps\tex\stained_clay_magenta_a.png" />
+    <Content Include="maps\tex\stained_clay_orange.png" />
+    <Content Include="maps\tex\stained_clay_orange_a.png" />
+    <Content Include="maps\tex\stained_clay_pink.png" />
+    <Content Include="maps\tex\stained_clay_pink_a.png" />
+    <Content Include="maps\tex\stained_clay_purple.png" />
+    <Content Include="maps\tex\stained_clay_purple_a.png" />
+    <Content Include="maps\tex\stained_clay_red.png" />
+    <Content Include="maps\tex\stained_clay_red_a.png" />
+    <Content Include="maps\tex\stained_clay_white.png" />
+    <Content Include="maps\tex\stained_clay_white_a.png" />
+    <Content Include="maps\tex\stained_clay_yellow.png" />
+    <Content Include="maps\tex\stained_clay_yellow_a.png" />
+    <Content Include="maps\tex\stone.png" />
+    <Content Include="maps\tex\stone_a.png" />
+    <Content Include="maps\tex\stone_brick.png" />
+    <Content Include="maps\tex\stone_brick_a.png" />
+    <Content Include="maps\tex\stone_brick_circle.png" />
+    <Content Include="maps\tex\stone_brick_circle_a.png" />
+    <Content Include="maps\tex\stone_brick_cracked.png" />
+    <Content Include="maps\tex\stone_brick_cracked_a.png" />
+    <Content Include="maps\tex\stone_brick_mossy.png" />
+    <Content Include="maps\tex\stone_brick_mossy_a.png" />
+    <Content Include="maps\tex\stone_slab_side.png" />
+    <Content Include="maps\tex\stone_slab_side_a.png" />
+    <Content Include="maps\tex\stone_slab_top.png" />
+    <Content Include="maps\tex\stone_slab_top_a.png" />
+    <Content Include="maps\tex\sugarcane.png" />
+    <Content Include="maps\tex\sugarcane_a.png" />
+    <Content Include="maps\tex\tall_grass.png" />
+    <Content Include="maps\tex\tall_grass_a.png" />
+    <Content Include="maps\tex\texture.png" />
+    <Content Include="maps\tex\tnt_bottom.png" />
+    <Content Include="maps\tex\tnt_bottom_a.png" />
+    <Content Include="maps\tex\tnt_side.png" />
+    <Content Include="maps\tex\tnt_side_a.png" />
+    <Content Include="maps\tex\tnt_top.png" />
+    <Content Include="maps\tex\tnt_top_a.png" />
+    <Content Include="maps\tex\torch.png" />
+    <Content Include="maps\tex\torch_a.png" />
+    <Content Include="maps\tex\torch_flame.png" />
+    <Content Include="maps\tex\torch_flame_a.png" />
+    <Content Include="maps\tex\tripwire.png" />
+    <Content Include="maps\tex\tripwire_a.png" />
+    <Content Include="maps\tex\tripwire_hook.png" />
+    <Content Include="maps\tex\tripwire_hook_a.png" />
+    <Content Include="maps\tex\unknown.png" />
+    <Content Include="maps\tex\vines.png" />
+    <Content Include="maps\tex\vines_a.png" />
+    <Content Include="maps\tex\wasteland_painting.png" />
+    <Content Include="maps\tex\wasteland_painting_a.png" />
+    <Content Include="maps\tex\water.png" />
+    <Content Include="maps\tex\water_a.png" />
+    <Content Include="maps\tex\water_flowing.png" />
+    <Content Include="maps\tex\water_flowing_a.png" />
+    <Content Include="maps\tex\wool_black.png" />
+    <Content Include="maps\tex\wool_black_a.png" />
+    <Content Include="maps\tex\wool_blue.png" />
+    <Content Include="maps\tex\wool_blue_a.png" />
+    <Content Include="maps\tex\wool_brown.png" />
+    <Content Include="maps\tex\wool_brown_a.png" />
+    <Content Include="maps\tex\wool_cyan.png" />
+    <Content Include="maps\tex\wool_cyan_a.png" />
+    <Content Include="maps\tex\wool_dark_gray.png" />
+    <Content Include="maps\tex\wool_dark_gray_a.png" />
+    <Content Include="maps\tex\wool_dark_grey.png" />
+    <Content Include="maps\tex\wool_green.png" />
+    <Content Include="maps\tex\wool_green_a.png" />
+    <Content Include="maps\tex\wool_light_blue.png" />
+    <Content Include="maps\tex\wool_light_blue_a.png" />
+    <Content Include="maps\tex\wool_light_gray.png" />
+    <Content Include="maps\tex\wool_light_gray_a.png" />
+    <Content Include="maps\tex\wool_lime.png" />
+    <Content Include="maps\tex\wool_lime_a.png" />
+    <Content Include="maps\tex\wool_magenta.png" />
+    <Content Include="maps\tex\wool_magenta_a.png" />
+    <Content Include="maps\tex\wool_orange.png" />
+    <Content Include="maps\tex\wool_orange_a.png" />
+    <Content Include="maps\tex\wool_pink.png" />
+    <Content Include="maps\tex\wool_pink_a.png" />
+    <Content Include="maps\tex\wool_purple.png" />
+    <Content Include="maps\tex\wool_purple_a.png" />
+    <Content Include="maps\tex\wool_red.png" />
+    <Content Include="maps\tex\wool_red_a.png" />
+    <Content Include="maps\tex\wool_white.png" />
+    <Content Include="maps\tex\wool_white_a.png" />
+    <Content Include="maps\tex\wool_yellow.png" />
+    <Content Include="maps\tex\wool_yellow_a.png" />
+    <Content Include="maps\tex\workbench_back.png" />
+    <Content Include="maps\tex\workbench_back_a.png" />
+    <Content Include="maps\tex\workbench_front.png" />
+    <Content Include="maps\tex\workbench_front_a.png" />
+    <Content Include="maps\tex\workbench_top.png" />
+    <Content Include="maps\tex\workbench_top_a.png" />
+    <Compile Include="Models\simpleScene.cs" />
+    <Content Include="Scripts\3DLibraries\CopyShader.js" />
+    <Content Include="Scripts\3DLibraries\EffectComposer.js" />
+    <Content Include="Scripts\3DLibraries\FirstPersonControls.js" />
+    <Content Include="Scripts\3DLibraries\MaskPass.js" />
+    <Content Include="Scripts\3DLibraries\RenderPass.js" />
+    <Content Include="Scripts\3DLibraries\ShaderPass.js" />
+    <Content Include="Scripts\3DLibraries\SSAOShader.js" />
+    <Content Include="Scripts\3DLibraries\stats.min.js" />
+    <Content Include="Scripts\3DLibraries\three.js" />
+    <Content Include="Scripts\3DLibraries\WebGLDeferredRenderer.js" />
+    <Content Include="Scripts\Libraries\bootstrap.js" />
+    <Content Include="Scripts\Libraries\bootstrap.min.js" />
+    <Content Include="maps\minecraft.mtl" />
+    <Content Include="maps\tex\texture.uv" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\superjim.pubxml" />
+    <None Include="Scripts\Libraries\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Libraries\jquery-1.10.2.js" />
+    <Content Include="Scripts\Libraries\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\MapViewer\camera.js" />
+    <Content Include="Scripts\MapViewer\camera.min.js">
+      <DependentUpon>camera.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\controls.js" />
+    <Content Include="Scripts\3DLibraries\FirstPersonControlsModed.js" />
+    <Content Include="Scripts\MapViewer\geometryBuilder.js" />
+    <Content Include="Scripts\3DLibraries\ammo.js" />
+    <Content Include="Scripts\Libraries\cycle.js" />
+    <Content Include="Scripts\3DLibraries\dat.gui.min.js" />
+    <Content Include="Scripts\3DLibraries\MTLLoader.js" />
+    <Content Include="Scripts\3DLibraries\physi.js" />
+    <Content Include="Scripts\3DLibraries\PointerLockControls.js" />
+    <Content Include="Scripts\3DLibraries\ThreeInspector.js" />
+    <Content Include="Scripts\3DLibraries\threex.rendererstats.js" />
+    <Content Include="Scripts\3DLibraries\WebGLRenderer3.js" />
+    <Content Include="Scripts\MapViewer\lights.js" />
+    <Content Include="Scripts\MapViewer\lights.min.js">
+      <DependentUpon>lights.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\map - non region.js" />
+    <Content Include="Scripts\MapViewer\map.js" />
+    <Content Include="Scripts\MapViewer\map.min.js">
+      <DependentUpon>map.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\mapRegion.js" />
+    <Content Include="Scripts\MapViewer\MapUtils.js" />
+    <Content Include="Scripts\MapViewer\mapViewer.js" />
+    <Content Include="Scripts\MapViewer\materials.js" />
+    <Content Include="Scripts\MapViewer\materials.min.js">
+      <DependentUpon>materials.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\meshContainer.js" />
+    <Content Include="Scripts\MapViewer\meshes.js" />
+    <Content Include="Scripts\MapViewer\meshes.min.js">
+      <DependentUpon>meshes.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\3DLibraries\OBJLoaderCustom.js" />
+    <Content Include="Scripts\3DLibraries\OBJLoaderCustom.min.js">
+      <DependentUpon>OBJLoaderCustom.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\objectParser.js" />
+    <Content Include="Scripts\MapViewer\region.js" />
+    <Content Include="Scripts\MapViewer\region.min.js">
+      <DependentUpon>region.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\renderer.js" />
+    <Content Include="Scripts\MapViewer\renderer.min.js">
+      <DependentUpon>renderer.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\scene.js" />
+    <Content Include="Scripts\MapViewer\test.js" />
+    <Content Include="Scripts\MapViewer\textures.js" />
+    <Content Include="Scripts\MapViewer\WorkIt.js" />
+    <Content Include="Scripts\Libraries\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Libraries\respond.js" />
+    <Content Include="Scripts\Libraries\respond.min.js" />
+    <Content Include="Scripts\Libraries\underscore-min.js" />
+    <Content Include="Scripts\Libraries\underscore.js" />
+    <Content Include="Scripts\Libraries\underscore.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Test\loader.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\Libraries\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\MapViewer\map.min.js.map">
+      <DependentUpon>map.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\WorkIt.min.js.map">
+      <DependentUpon>WorkIt.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\region.min.js.map">
+      <DependentUpon>region.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\materials.min.js.map">
+      <DependentUpon>materials.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\3DLibraries\OBJLoaderCustom.min.js.map">
+      <DependentUpon>OBJLoaderCustom.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\meshes.min.js.map">
+      <DependentUpon>meshes.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\renderer.min.js.map">
+      <DependentUpon>renderer.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\lights.min.js.map">
+      <DependentUpon>lights.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\MapViewer\camera.min.js.map">
+      <DependentUpon>camera.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\_glslShaders.cshtml" />
+    <Content Include="Views\Shared\_3dScene.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Scripts\Libraries\underscore.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FaceCruncher\FaceCruncher.csproj">
+      <Project>{c80626f4-ee89-4d05-9531-0a185f7fbff6}</Project>
+      <Name>FaceCruncher</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58282</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

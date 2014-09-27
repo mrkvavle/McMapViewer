@@ -41,3 +41,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+jMc2Obj-dev_r306 (1).jar
+McMapViewer/Node/node_modules/*
+bin
+obj
+properties
+*.min*

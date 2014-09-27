@@ -1,0 +1,67 @@
+﻿html, body {
+		width: 100%;
+		height: 100%;
+	}
+
+	body {
+		background-color: #ffffff;
+		margin: 0;
+		overflow: hidden;
+		font-family: arial;
+	}
+
+	#blocker {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.5);
+	}
+
+	#instructions {
+		width: 100%;
+		height: 100%;
+		display: -webkit-box;
+		display: -moz-box;
+		display: box;
+		-webkit-box-orient: horizontal;
+		-moz-box-orient: horizontal;
+		box-orient: horizontal;
+		-webkit-box-pack: center;
+		-moz-box-pack: center;
+		box-pack: center;
+		-webkit-box-align: center;
+		-moz-box-align: center;
+		box-align: center;
+		color: #ffffff;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	#loading {
+		font-size: 36px;
+		background-color: black;
+		display:none;
+		position: absolute;
+		top: 100px;
+		left: 125px;
+		padding: 3px 15px 6px 15px;
+	}
+	#loading h1{
+		color: chartreuse !important;
+		margin:0px;
+	}
+	#container {
+		background: black;
+	}
+
+	#containerOld {
+		background: #001591; /* Old browsers */
+		background: -moz-linear-gradient(top, #000000 0%, #001591 29%, #001591 29%, #ff5959 75%, #ff8c4f 99%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(29%,#001591), color-stop(29%,#001591), color-stop(75%,#ff5959), color-stop(99%,#ff8c4f)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, #000000 0%,#001591 29%,#001591 29%,#ff5959 75%,#ff8c4f 99%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, #000000 0%,#001591 29%,#001591 29%,#ff5959 75%,#ff8c4f 99%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, #000000 0%,#001591 29%,#001591 29%,#ff5959 75%,#ff8c4f 99%); /* IE10+ */
+		background: linear-gradient(to bottom, #000000 0%,#001591 29%,#001591 29%,#ff5959 75%,#ff8c4f 99%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#ff8c4f',GradientType=0 ); /* IE6-9 */
+	}

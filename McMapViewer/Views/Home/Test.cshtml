@@ -1,0 +1,150 @@
+﻿@{
+	ViewBag.Title = "Test";
+	Layout = "~/Views/Shared/_3dScene.cshtml";
+}
+
+@*<div id="lightDebugger" style="position: fixed; top: 57px; left: 30px; background-color:#ff5959; color:white; font-weight:bold; padding:10px;"></div>
+	<div id="camPos" style="position: fixed; top: 57px; right: 30px; background-color:#ff5959; color:white; font-weight:bold; padding:10px;"></div>*@
+
+<script src="http://threejs.org/examples/fonts/optimer_regular.typeface.js"></script>
+
+<div id="loading">
+	<h1>Loading....</h1>
+</div>
+
+<style>
+	.sourceButton {
+		position: absolute;
+		top: 58px;
+		left: 25px;
+	}
+
+		.sourceButton:after {
+			content: "Source: Website";
+		}
+
+		.sourceButton.node:after {
+			content: "Source: Node";
+		}
+</style>
+
+
+<button id="source" class="sourceButton btn btn-warning btn-sm" style=""></button>
+<script>
+	$(function () {
+		$("#source").click(function () {
+			$(this).toggleClass("node");
+			window.useNode = $(this).hasClass("node");
+
+			load();
+		});
+	});
+
+	window.useNode = false;
+
+	function getMats(callback) {
+		var mtlLoader = new THREE.MTLLoader("http://localhost/maps/minecraft.mtl");
+		mtlLoader.load("http://localhost/maps/minecraft.mtl", function (materials) {
+			window.materialsCreator = materials;
+			window.materialsCreator.preload();
+			callback();
+		});
+	}
+
+	function getObjectsFromNodeServer() {
+		console.log("loading from node");
+		$.getJSON("http://localhost/node/loadregion.js", function (data) {
+			console.log("node loaded");
+
+			ConvertObjsToMeshes(data);
+		});
+	}
+
+	function ConvertObjsToMeshes(objs) {
+
+		console.log(o);
+		var tO = objs.length;
+
+		for (var o = 0; o < tO; o++) {
+			var obj = objs[o];
+			console.log(obj);
+			var geo = new THREE.Geometry();
+
+			geo.name = obj.name;
+
+			// set faces
+			var tF = obj.faces.length;
+			for (f = 0; f < tF; f++) {
+				var face = obj.faces[f];
+				geo.faces.push(new THREE.Face3(face.a, face.b, face.c));
+			}
+
+			// set verts
+			var tV = obj.vertices.length;
+			for (v = 0; v < tV; v++) {
+				var vert = obj.vertices[v];
+				geo.vertices.push(new THREE.Vector3(vert.x, vert.y, vert.z));
+			}
+
+			// set uvs
+			var tU = obj.uvs.length;
+			for (u = 0; u < tU; u++) {
+				var uv = obj.uvs[u];
+
+				geo.faceVertexUvs[0].push([
+					new THREE.Vector2(uv[0].x, uv[0].y),
+					new THREE.Vector2(uv[1].x, uv[1].y),
+					new THREE.Vector2(uv[2].x, uv[2].y),
+				]);
+			}
+
+			geo.computeFaceNormals();
+
+			var mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial());
+			mesh.name = geo.name;
+			mesh.material = assignMaterial(geo.name);
+			window.objects.add(mesh);
+		}
+	}
+
+	function load() {
+		scene.remove(window.objects);
+
+		window.objects = new THREE.Object3D();
+
+		getMats(function () {
+			if (window.useNode) {
+				getObjectsFromNodeServer();
+			} else {
+				getObjects();
+			}
+
+			scene.add(window.objects);
+		});
+	}
+
+	function assignMaterial(meshName) {
+		var material = window.materialsCreator.create(meshName);
+		return material;
+	}
+
+	function getObjects(callback) {
+		$.get("http://localhost/map/GetVerts/vertexCruncher", function (data) {
+
+
+			var objs = parseObject(data);
+			var i = objs.children.length;
+
+			while (i--) {
+				objs.children[i].material = assignMaterial(objs.children[i].geometry.name);
+			}
+
+			window.objects.add(objs);
+		});
+	}
+
+</script>
+
+@section sceneLoaded {
+	load();
+}

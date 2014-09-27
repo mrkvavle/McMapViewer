@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMapViewer", "McMapViewer\McMapViewer.csproj", "{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceCruncher", "FaceCruncher\FaceCruncher.csproj", "{C80626F4-EE89-4D05-9531-0A185F7FBFF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeServer", "McMapViewer\Node\NodeServer.csproj", "{0B56C0C1-5EE8-4F8D-905D-012141184BB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BC5421B-E1EE-41B5-824D-74D4F4FC5D60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C80626F4-EE89-4D05-9531-0A185F7FBFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C80626F4-EE89-4D05-9531-0A185F7FBFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C80626F4-EE89-4D05-9531-0A185F7FBFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C80626F4-EE89-4D05-9531-0A185F7FBFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B56C0C1-5EE8-4F8D-905D-012141184BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B56C0C1-5EE8-4F8D-905D-012141184BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B56C0C1-5EE8-4F8D-905D-012141184BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B56C0C1-5EE8-4F8D-905D-012141184BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

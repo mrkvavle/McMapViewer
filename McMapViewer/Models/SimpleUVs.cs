@@ -5,13 +5,13 @@ using System.Text;
 
 namespace McMapViewer.Models
 {
-	public class SimpleUV : ICloneable
+	public class UV : ICloneable
 	{
 		public double X;
 		public double Y;
 		public int Idx;
 
-		public SimpleUV(double x, double y, int idx)
+		public UV(double x, double y, int idx)
 		{
 			X = x;
 			Y = y;

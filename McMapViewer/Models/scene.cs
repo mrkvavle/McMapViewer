@@ -1,155 +1,152 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace McMapViewer.Models
 {
 	public class Scene
 	{
-		string material;
-		List<Geometry> objects;
-		List<string> uvLines;
-		public Scene ( List<string> objLines )
+		Dictionary<int, Vert> verts = new Dictionary<int, Vert>();
+		Dictionary<int, UV> uvs = new Dictionary<int, UV>();
+
+		int vertKey = 1;
+		int uvKey = 1;
+
+		public List<Geo> geos = new List<Geo>();
+		Geo geo = null;
+
+		public Scene(List<string> lines)
 		{
-			objects = new List<Geometry>();
-
-			var name = "";
-			var verts = new List<Vert>();
-			var faces = new List<Face4>();
-			Geometry geo;
-			uvLines = new List<string>();
-
-			foreach ( var line in objLines )
+			foreach (var line in lines)
 			{
-				var lineType = line.Split(' ')[0];
-
-				switch ( lineType )
+				string[] lineArray = line.Split(new Char[] { ' ', '/' });
+				switch (lineArray[0])
 				{
-					case "mtllib":
-						material = line.Split(' ')[1];
-						break;
-
-					case "vt":
-						uvLines.Add(line);
-						break;
-
 					case "v":
-						addVert(line, ref verts);
+						handleVertex(lineArray);
 						break;
-
-					case "f":
-						addFace(line, ref verts, ref faces);
+					case "vt":
+						handleUV(lineArray);
 						break;
-
-					case "g":
-
-						addGeo(ref name, ref verts, ref faces);
-						name = line.Split(' ')[1];
-						break;
-
 					case "usemtl":
+						handleGeo(lineArray, false);
+						break;
+					case "f":
+						handleFace(lineArray);
 						break;
 				}
 			}
-			addGeo(ref name, ref verts, ref faces);
+
+			handleGeo(null, true);
 		}
 
-		public void addGeo ( ref string name, ref List<Vert> verts, ref List<Face4> faces )
+		private void handleGeo(string[] line, Boolean LastGeo)
 		{
-			if ( name != "" )
+			if (geo != null)
 			{
-				var geo = new Geometry(name, faces);
-
-				// reset for next obj
-				name = "";
-				faces = new List<Face4>();
-
-				objects.Add(geo);
+				geos.Add(geo);
 			}
+			if (!LastGeo)
+				geo = new Geo(line[1]);
 		}
 
-		public void addVert ( string line, ref List<Vert> verts )
+		private void handleVertex(string[] line)
 		{
-			var vert = line.Split(' ');
-			verts.Add(new Vert(
-				Convert.ToDecimal(vert[1]),
-				Convert.ToDecimal(vert[2]),
-				Convert.ToDecimal(vert[3])
-			));
+			// ["v 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
+			verts.Add(
+				vertKey,
+				new Vert(
+					Convert.ToDouble(line[1]),
+					Convert.ToDouble(line[2]),
+					Convert.ToDouble(line[3]),
+					vertKey
+				)
+			);
+			vertKey += 1;
 		}
 
-		public void addFace ( string line, ref List<Vert> verts, ref List<Face4> faces )
+		private void handleUV(string[] line)
 		{
-			var face = line.Split(' ').Select(f => f.Split('/')[0]).ToList();
-			var f1 = Convert.ToInt32(face[1]);
-			var f2 = Convert.ToInt32(face[2]);
-			var f3 = Convert.ToInt32(face[3]);
-			var f4 = Convert.ToInt32(face[4]);
+			// ["vt 0.1 0.2", "0.1", "0.2"]
+			uvs.Add(
+				uvKey,
+				new UV(
+					Convert.ToDouble(line[1]),
+					Convert.ToDouble(line[2]),
+					uvKey
+				)
+			);
 
-			faces.Add(new Face4(
-				verts[f1 - 1],
-				verts[f2 - 1],
-				verts[f3 - 1],
-				verts[f4 - 1]
-			));
+			uvKey += 1;
 		}
 
-		public string ToString ( )
+		private void handleFace(string[] line)
 		{
-			var objLines = new List<string>();
-			objLines.Add("mtllib " + material);
-			objLines.Add("");
+			// [lineArray[1], lineArray[3], lineArray[5], lineArray[7]], //faces
+			var v1 = verts[Convert.ToInt32(line[1])];
+			var v2 = verts[Convert.ToInt32(line[3])];
+			var v3 = verts[Convert.ToInt32(line[5])];
+			var v4 = verts[Convert.ToInt32(line[7])];
+
+			addGeoVerts(v1, v2, v3, v4);
 			
-			var vertLines = new List<string>();
+			// [lineArray[2], lineArray[4], lineArray[6], lineArray[8]] //uv
+			UV uv1 = uvs[Convert.ToInt16(line[2])];
+			UV uv2 = uvs[Convert.ToInt16(line[4])];
+			UV uv3 = uvs[Convert.ToInt16(line[6])];
+			UV uv4 = uvs[Convert.ToInt16(line[8])];
 
-			foreach ( Geometry geo in objects )
+			geo.FaceVertexUVs.Add(new FaceVertexUV(uv1, uv2, uv4));
+			geo.FaceVertexUVs.Add(new FaceVertexUV(uv2, uv3, uv4));
+		}
+
+		private void addGeoVerts(Vert v1, Vert v2, Vert v3, Vert v4)
+		{
+			var geoV1 = (Vert)geo.Verts[(object)(v1.Idx)];
+			if (geoV1 == null)
 			{
-				// reset verts object
+				geoV1 = (Vert)v1.Clone();
+				geo.AddVert(geoV1.Idx, geoV1);
+			}
+			
+			var geoV2 = (Vert)geo.Verts[(object)(v2.Idx)];
+			if (geoV2 == null)
+			{
+				geoV2 = (Vert)v2.Clone();
+				geo.AddVert(geoV2.Idx, geoV2);
+			}
+			
+			var geoV3 = (Vert)geo.Verts[(object)(v3.Idx)];
+			if (geoV3 == null)
 
-				vertLines = new List<string>();
-
-				foreach ( var vert in geo.Verts )
-				{
-					vertLines.Add(vert.ToString());
-				}
-
-				vertLines = vertLines.Distinct().ToList();
-				objLines.Add("o " + geo.Name);
-				
-				objLines.AddRange(vertLines);
-				objLines.Add("");
-				objLines.AddRange(uvLines);
-				objLines.Add("");
-
-				//objLines.Add("g " + geo.Name);
-				objLines.Add("usemtl " + geo.Name);
-
-				foreach ( var face in geo.Faces )
-				{
-					vertLines.Add(face.f1.ToString());
-					vertLines.Add(face.f2.ToString());
-					vertLines.Add(face.f3.ToString());
-					vertLines.Add(face.f4.ToString());
-				}
-
-				
-				
-				objLines.Add("");
-
-				foreach ( var face in geo.Faces )
-				{
-					var v1 = vertLines.IndexOf(face.f1.ToString());
-					var v2 = vertLines.IndexOf(face.f2.ToString());
-					var v3 = vertLines.IndexOf(face.f3.ToString());
-					var v4 = vertLines.IndexOf(face.f4.ToString());
-					objLines.Add(Face4Line.getLine(v1 + 1, v2 + 1, v3 + 1, v4 + 1));
-				}
-
-				objLines.Add("");
+			{
+				geoV3 = (Vert)v3.Clone();
+				geo.AddVert(geoV3.Idx, geoV3);
+			}
+			
+			var geoV4 = (Vert)geo.Verts[(object)(v4.Idx)];
+			if (geoV4 == null)
+			{
+				geoV4 = (Vert)v4.Clone();
+				geo.AddVert(geoV4.Idx, geoV4);
 			}
 
-			return ( String.Join(Environment.NewLine, objLines) );
+			geo.Faces.Add(new Face(geoV1, geoV2, geoV4));
+			geo.Faces.Add(new Face(geoV2, geoV3, geoV4));
+		}
+
+		public override string ToString()
+		{
+			StringBuilder sceneString = new StringBuilder();
+
+			foreach(var geo in geos)
+			{
+				sceneString.Append(", " + geo.ToString());
+			}
+			
+			return "[" + sceneString.ToString().Substring(1) + "]";
 		}
 	}
 }

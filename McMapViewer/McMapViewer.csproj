@@ -133,11 +133,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\SimpleFace.cs" />
-    <Compile Include="Models\SimpleFaceVertexUV.cs" />
-    <Compile Include="Models\SimpleGeo.cs" />
+    <Compile Include="Models\Face.cs" />
+    <Compile Include="Models\FaceVertexUV.cs" />
+    <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\SimpleUVs.cs" />
-    <Compile Include="Models\SimpleVert.cs" />
+    <Compile Include="Models\Vert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -880,7 +880,7 @@
     <Content Include="maps\tex\workbench_front_a.png" />
     <Content Include="maps\tex\workbench_top.png" />
     <Content Include="maps\tex\workbench_top_a.png" />
-    <Compile Include="Models\simpleScene.cs" />
+    <Compile Include="Models\Scene.cs" />
     <Content Include="Scripts\3DLibraries\CopyShader.js" />
     <Content Include="Scripts\3DLibraries\EffectComposer.js" />
     <Content Include="Scripts\3DLibraries\FirstPersonControls.js" />
@@ -1010,17 +1010,17 @@
     <Content Include="Scripts\Libraries\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FaceCruncher\FaceCruncher.csproj">
-      <Project>{c80626f4-ee89-4d05-9531-0a185f7fbff6}</Project>
-      <Name>FaceCruncher</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\McMap2JSON\McMap2JSON.csproj">
+      <Project>{ec1b8260-d63d-43e4-b63c-fd9a732f44ee}</Project>
+      <Name>McMap2JSON</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

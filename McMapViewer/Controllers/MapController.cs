@@ -4,15 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using FaceCruncher;
-using McMapViewer.Models;
+using McMap2JSON;
 
 namespace McMapViewer.Controllers
 {
 	public class MapController : Controller
 	{
 		//
-		// GET: /Map/
+		// GET: /Region/
 		[HttpGet]
 		public JsonResult Get ( )
 		{
@@ -43,19 +42,26 @@ namespace McMapViewer.Controllers
 		//
 		public ActionResult GetObjsPrimed(string map, string filename)
 		{
-			var file = System.IO.File.ReadAllLines(Server.MapPath("~/maps/" + map + "/" + filename + ".obj"));
-			
-			var scene = new SimpleScene(file.ToList());
-		
-			return Content(scene.ToString());
+			var json = System.IO.File.ReadAllText(Server.MapPath("~/maps/" + map + "/" + filename + ".json"));
+
+			return Content(json);
 		}
 
-		public ActionResult VertCruncher ( string id )
+		public ActionResult TestMapExporter(string map, string filename)
 		{
-			var file = System.IO.File.ReadAllLines(Server.MapPath("~/test/" + id + ".obj")).ToList();
+			var file = System.IO.File.ReadAllLines(Server.MapPath("~/test/" + filename + ".obj"));
 
-			return Content(Cruncher.Crunch(file));
+			var mapVar = new Region(file.ToList());
+
+			return Content("");
 		}
+
+	//	public ActionResult VertCruncher ( string id )
+	//	{
+	//		var file = System.IO.File.ReadAllLines(Server.MapPath("~/test/" + id + ".obj")).ToList();
+	//
+	//		return Content(Cruncher.Crunch(file));
+	//	}
 
 		public RedirectResult tex ( string id )
 		{

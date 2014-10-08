@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace McMap2JSON
@@ -18,14 +19,14 @@ namespace McMap2JSON
 
 		public override string ToString()
 		{
-			return @"{""a"":" + (A.Idx - 1).ToString() + @",""b"":" + (B.Idx-1).ToString() + @",""c"":" + (C.Idx-1).ToString() + "}";
+			return @"{""a"":" + (A.Idx - 1).ToString(CultureInfo.InvariantCulture) + @",""b"":" + (B.Idx-1).ToString(CultureInfo.InvariantCulture) + @",""c"":" + (C.Idx-1).ToString(CultureInfo.InvariantCulture) + "}";
 		}
 	}
 
 	public enum FaceOrientation
 	{
-		horizontal,
-		frontBack,
-		leftRight
+		Horizontal,
+		FrontBack,
+		LeftRight
 	};
 }

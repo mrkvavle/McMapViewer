@@ -27,7 +27,7 @@ namespace MCMapExporter
 	public partial class MainWindow : Window
 	{
 		private const string MapImportDirectory = @"A:\Code\MCMaps";
-		private const string MapExportDirectory = @"A:\Code\MapsExport";
+		private const string MapExportDirectory = @"A:\Code\McMapViewer\McMapViewer\maps";
 		private readonly BackgroundWorker worker = new BackgroundWorker();
 		private readonly Stopwatch exportTimer = new Stopwatch();
 		private string map = "";
@@ -41,6 +41,7 @@ namespace MCMapExporter
 		}
 
 		private void ExportButton_Click(object sender, RoutedEventArgs e)
+
 		{
 			if (MapsList.SelectedItem != null)
 			{

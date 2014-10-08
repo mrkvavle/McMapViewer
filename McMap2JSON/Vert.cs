@@ -6,7 +6,7 @@ using System.Text;
 
 namespace McMap2JSON
 {
-	public class Vert : ICloneable
+	public class Vert
 	{
 		public double X;
 		public double Y;
@@ -25,10 +25,5 @@ namespace McMap2JSON
 		{
 			return @"{""x"": " + X.ToString(CultureInfo.InvariantCulture) + @", ""y"": " + Y.ToString(CultureInfo.InvariantCulture) + @", ""z"": " + Z.ToString(CultureInfo.InvariantCulture) + "}";
 		}
-
-		public object Clone()
-		{
-			return this.MemberwiseClone();
-		} 
 	}
 }

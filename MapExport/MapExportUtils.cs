@@ -25,67 +25,40 @@ namespace MapExport
 			var mapDir = Path.Combine(mapImportDirectory, mapName);
 			var regionFiles = Directory.EnumerateFiles(mapDir, "*.mca", SearchOption.AllDirectories).ToList();
 
-			//var xpCount = new ConcurrentDictionary<string, exportCount>();
+			if (Directory.Exists(Path.Combine(mapExportDirectory, mapName)))
+				Directory.Delete(Path.Combine(mapExportDirectory, mapName), true);
 
 			Parallel.ForEach(regionFiles, regionFile =>
 			{
+				var fileInfo = new FileInfo(regionFile);
+
+				if (fileInfo.Length <= 5) return;
+
 				var nameArr = regionFile.Split('.');
 				var x = Convert.ToInt32(nameArr[1]);
 				var y = Convert.ToInt32(nameArr[2]);
 
-				var regionObject = Region2Obj.ExportRegion(mapName, x, y, Path.GetDirectoryName(regionFile), mapExportDirectory);
-				var regionLines = File.ReadAllLines(Path.Combine(mapExportDirectory, regionObject)).ToList();
+				Region2Obj.ExportRegion(mapName, x, y, Path.GetDirectoryName(regionFile), mapExportDirectory);
+			});
 
-				if (regionLines.Count <= 5)
-				{
-					File.Delete(Path.Combine(mapExportDirectory, regionObject));
-					return;
-				}
+			var regionObjectFiles = Directory.EnumerateFiles(Path.Combine(mapExportDirectory, mapName), "*.obj");
 
-				var region = new Region(regionLines);
+			Parallel.ForEach(regionObjectFiles, regionObject =>
+			{
+
+				var filename = Path.Combine(mapExportDirectory, regionObject);
+				var region = new Region(filename);
 
 				foreach (var chunk in region.Chunks.Values)
 				{
-
-
 					var json = chunk.ToString();
 					if (json == "") continue;
 
-					var filename = mapName + "_" + chunk.ChunkName + ".json";
+					var chunkFilename = mapName + "_" + chunk.ChunkName + ".json";
 					Directory.CreateDirectory(Path.Combine(mapExportDirectory, mapName));
-					File.WriteAllText(Path.Combine(mapExportDirectory, mapName, filename), json);
-
-					//xpCount.AddOrUpdate(chunk.ChunkName, new exportCount()
-					//{
-					//	name = chunk.ChunkName,
-					//	region = regionFile,
-					//	count = 1
-					//},
-					//	(k, v) =>
-					//		new exportCount()
-					//		{
-					//			name = chunk.ChunkName,
-					//			region = v.region + ", " + regionFile,
-					//			count = v.count + 1
-					//		});
+					File.WriteAllText(Path.Combine(mapExportDirectory, mapName, chunkFilename), json);
 				}
-				File.Delete(Path.Combine(mapExportDirectory, regionObject));
 			});
-
-			//var dupes = xpCount.Where(d => d.Value.count > 1);
 		}
-
-		public static void ExportRegionToJson(string fileName)
-		{
-			var regionLines = System.IO.File.ReadAllLines(fileName).ToList();
-			var region = new Region(regionLines);
-		}
-	}
-
-	public class exportCount
-	{
-		public string name;
-		public string region;
-		public int count;
 	}
 }

@@ -11,25 +11,21 @@ namespace McMapViewer.Controllers
 	public class MapController : Controller
 	{
 		//
-		// GET: /Region/
+		// GET: /Map/
 		[HttpGet]
 		public JsonResult Get ( )
 		{
-			var maps = System.IO.Directory.GetDirectories(HttpContext.Request.PhysicalApplicationPath + "maps").Select(m => Path.GetFileName(m)).Where(m => m != "tex");
+			var maps = System.IO.Directory.GetDirectories(HttpContext.Request.PhysicalApplicationPath + "maps").Select(m => Path.GetFileName(m));
 
 			return Json(maps, JsonRequestBehavior.AllowGet);
 		}
 		[HttpGet]
 		public JsonResult GetInfo ( string id )
 		{
-			var files = System.IO.Directory.EnumerateFiles(HttpContext.Request.PhysicalApplicationPath + "/maps/" + id + "/", id + "*");
+			var files = System.IO.Directory.EnumerateFiles(HttpContext.Request.PhysicalApplicationPath + "/maps/" + id + "/", "*.json").Select(m => Path.GetFileName(m)).Where(m => m != "tex"); ;
 			var filenames = files.Select(f => Path.GetFileNameWithoutExtension(f));
-			//var regions = filenames.ToList().Select(f => new
-			//{
-			//	a = f.Split('_')[1],
-			//	b = f.Split('_')[2]
-			//});
-			var regions = filenames.Select(f => f.Replace(id + "_", "").Replace(".obj", "")).OrderBy(r => r);
+
+			var regions = filenames.Select(f => f.Replace(id + "_", "")).OrderBy(r => r);
 			return Json(regions, JsonRequestBehavior.AllowGet);
 		}
 
@@ -45,15 +41,6 @@ namespace McMapViewer.Controllers
 			var json = System.IO.File.ReadAllText(Server.MapPath("~/maps/" + map + "/" + filename + ".json"));
 
 			return Content(json);
-		}
-
-		public ActionResult TestMapExporter(string map, string filename)
-		{
-			var file = System.IO.File.ReadAllLines(Server.MapPath("~/test/" + filename + ".obj"));
-
-			var mapVar = new Region(file.ToList());
-
-			return Content("");
 		}
 
 	//	public ActionResult VertCruncher ( string id )

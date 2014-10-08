@@ -7,21 +7,20 @@ Materials.GetMat = function (meshName) {
 }
 
 Materials.GetMaterials = function (callback) {
+	var mtlLoader = new THREE.MTLLoader("/TexturePacks/" + window.mapViewer.texturePack + "/");
 
-	var mtlLoader = new THREE.MTLLoader("/maps/");
-
-	mtlLoader.load("/maps/minecraft.mtl", function (materials) {
+	mtlLoader.load("/TexturePacks/minecraft.mtl", function (materials) {
 		window.mapViewer.materialsCreator = materials;
 		window.mapViewer.materialsCreator.preload(Materials.fixMaterials);
-		
+
 		callback();
 	});
 }
 
-Materials.fixMaterials=function(){
+Materials.fixMaterials = function () {
 
 	var mats = window.mapViewer.materialsCreator.materials;
-	
+
 	for (var mat in mats) {
 		mats[mat] = Materials.fixMaterial(mats[mat]);
 	}
@@ -486,3 +485,51 @@ Materials.GetMats = function () {
 	return materials;
 }
 
+Materials.GetTexturePacks = function (callback) {
+	var that = this;
+
+	$.getJSON("/material/getTexturePacks", function (texturePacks) {
+		window.mapViewer.texturePacks = texturePacks;
+		that.DisplayTexturePacks();
+
+		that.GetMaterials(callback);
+	});
+}
+
+Materials.DisplayTexturePacks = function () {
+	var i = window.mapViewer.texturePacks.length;
+	while (i--) {
+		$('#texturePacks').prepend("<li><a href='#' class='loadTexturePack' name='" + window.mapViewer.texturePacks[i] + "'>" + window.mapViewer.texturePacks[i] + "</a> </li>");
+	}
+
+	$('.loadTexturePack').click(function () {
+		$('#loading').show();
+		window.mapViewer.texturePack = $(this).attr("name");
+
+		Materials.GetMaterials(function () {
+			Materials.ChangeTextures();
+		});
+	});
+}
+
+Materials.ChangeTextures = function () {
+	var meshes = window.mapViewer.meshes;
+	var meshTypes = ['o'];
+
+	for (var i = 0; i < meshTypes.length; i++) {
+		var meshT = meshes[meshTypes[i]];
+		var nMax = meshT.children.length;
+
+		for (var n = 0; n < nMax; n++) {
+			var regionObj = meshT.children[n];
+			var meshCount = regionObj.children.length;
+
+			for (var r = 0; r < meshCount; r++) {
+				var m = regionObj.children[r];
+
+				m.material = Materials.GetMat(m.name);
+			}
+		}
+	}
+	$('#loading').hide();
+}

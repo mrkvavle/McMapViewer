@@ -7,14 +7,17 @@ Meshes.GetMeshes = function (map, filename, callback) {
 }
 
 Meshes.GetMeshObjects = function (map, filename, callback) {
-	$.getJSON("/node/loadregion.js?map=" + map + "&filename=" + filename, function (objs) {
+	//var url = "/node/loadregion.js?map=" + map + "&filename=" + filename;
+	var url = "/map/getObjsPrimed/" + map + "/" + filename;
+
+	$.getJSON(url, function (objs) {
 		Meshes.BuildMeshFromObjs(filename, objs, callback);
 	});
 };
 
 Meshes.BuildMeshFromObjs = function (filename, objs, callback) {
 	var unfixedMeshes = [];
-	
+
 	var len = objs.length;
 	for (var i = 0; i < len; i++) {
 		var obj = objs[i];
@@ -23,7 +26,7 @@ Meshes.BuildMeshFromObjs = function (filename, objs, callback) {
 		var geo = geoBuilder.Build();
 
 		var mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial());
-		
+
 		mesh.name = geo.name;
 		mesh.material = Materials.GetMat(geo.name);
 		unfixedMeshes.push(mesh);
@@ -31,7 +34,7 @@ Meshes.BuildMeshFromObjs = function (filename, objs, callback) {
 
 	// process the meshes and the mesh materials
 	var meshes = this.ProcessMeshes(filename, unfixedMeshes);
-	
+
 	callback(meshes);
 };
 
@@ -39,7 +42,7 @@ Meshes.ProcessMeshes = function (filename, _meshes) {
 	var meshes = {
 		liquid: new THREE.Object3D(),
 		transparent: new THREE.Object3D(),
-		opaque:new THREE.Object3D()
+		opaque: new THREE.Object3D()
 	}
 
 	meshes.liquid.name = filename;

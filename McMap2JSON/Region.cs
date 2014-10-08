@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,71 +18,51 @@ namespace McMap2JSON
 		int uvKey = 1;
 		public Dictionary<string, Chunk> Chunks = new Dictionary<string, Chunk>();
 
-		public Chunk CurrentChunk;
-		public Geo CurrentGeo;
+		private Chunk currentChunk;
+		private Geo currentGeo;
+		private string currentMaterial = "";
 
-		public Region(List<string> lines)
+		public Region(string filename)
 		{
-			foreach (var line in lines)
+			string line;
+			if(!File.Exists(filename)) return;
+			
+			using (var reader = File.OpenText(filename))
 			{
-				var lineArray = line.Split(new Char[] { ' ', '/', '_' }).ToList();
-				switch (lineArray[0])
+				while ((line = reader.ReadLine()) != null)
 				{
-					case "v":
-						HandleVertex(lineArray);
-						break;
-					case "vt":
-						HandleUv(lineArray);
-						break;
-					case "g":
-						HandleGroup(lineArray, false);
-						break;
-					case "usemtl":
-						HandleMtl(lineArray);
-						break;
-					case "f":
-						HandleFace(lineArray);
-						break;
+					HandleLine(line);
 				}
 			}
 
 			// add last geo 
-			HandleGroup(null, true);
+			HandleMtl(null, true);
+		}
+		private void HandleLine(string line)
+		{
+
+			var lineArray = line.Split(new Char[] { ' ', '/' }).ToList();
+			switch (lineArray[0])
+			{
+				case "v":
+					HandleVertex(lineArray);
+					break;
+				case "vt":
+					HandleUv(lineArray);
+					break;
+				case "usemtl":
+					HandleMtl(lineArray, false);
+					break;
+				case "f":
+					HandleFace(lineArray);
+					break;
+			}
 		}
 
-		private void HandleMtl(List<string> lineArray)
+		private void HandleMtl(List<string> line, Boolean lastGeo)
 		{
-			if (CurrentGeo != null && CurrentGeo.Name == "")
-				CurrentGeo.Name = lineArray[1];
-		}
-
-		private void HandleGroup(List<string> line, Boolean lastGeo)
-		{
-			if (!lastGeo)
-			{
-				// set current chunk
-				var chunkKey = line[2] + '_' + line[3];
-
-				if (!Chunks.TryGetValue(chunkKey, out CurrentChunk))
-				{
-					CurrentChunk = new Chunk(Convert.ToInt32(line[2]), Convert.ToInt32(line[3]));
-					Chunks.Add(CurrentChunk.Xy, CurrentChunk);
-				}
-			}
-
-			// add current geo to current chunk
-			if (CurrentGeo != null)
-			{
-				CurrentChunk.Geos.Add(CurrentGeo);
-			}
-
-			if (!lastGeo)
-			{
-				line.RemoveRange(0, 4);
-
-				var geoName = String.Join("_", line);
-				CurrentGeo = new Geo(geoName);
-			}
+			if (line != null)
+				currentMaterial = line[1];
 		}
 
 		private void HandleVertex(List<string> line)
@@ -104,8 +86,8 @@ namespace McMap2JSON
 			uvs.Add(
 				uvKey,
 				new UV(
-					line[1],
-					line[2],
+					Convert.ToSingle(line[1]),
+					Convert.ToSingle(line[2]),
 					uvKey
 				)
 			);
@@ -121,6 +103,9 @@ namespace McMap2JSON
 			var v3 = verts[Convert.ToInt32(line[5])];
 			var v4 = verts[Convert.ToInt32(line[7])];
 
+
+			var vertArr = new Vert[4] { v1, v2, v3, v4 };
+			SetCurrentChunkGeo(vertArr);
 			AddGeoVerts(v1, v2, v3, v4);
 
 			// [lineArray[2], lineArray[4], lineArray[6], lineArray[8]] //uv
@@ -134,70 +119,121 @@ namespace McMap2JSON
 
 		private void AddGeoVerts(Vert v1, Vert v2, Vert v3, Vert v4)
 		{
-			var geoV1 = (Vert)CurrentGeo.Verts[(object)(v1.Idx)];
-			if (geoV1 == null)
+			Vert geoV1;
+			Vert geoV2;
+			Vert geoV3;
+			Vert geoV4;
+
+			if (!currentGeo.Verts.TryGetValue(v1.Idx, out geoV1))
 			{
-				geoV1 = (Vert)v1.Clone();
-				CurrentGeo.AddVert(geoV1.Idx, geoV1);
+				geoV1 = new Vert(v1.X, v1.Y, v1.Z, v1.Idx);
+				currentGeo.AddVert(geoV1.Idx, geoV1);
 			}
 
-			var geoV2 = (Vert)CurrentGeo.Verts[(object)(v2.Idx)];
-			if (geoV2 == null)
+			if (!currentGeo.Verts.TryGetValue(v2.Idx, out geoV2))
 			{
-				geoV2 = (Vert)v2.Clone();
-				CurrentGeo.AddVert(geoV2.Idx, geoV2);
+				geoV2 = new Vert(v2.X, v2.Y, v2.Z, v2.Idx);
+				currentGeo.AddVert(geoV2.Idx, geoV2);
 			}
 
-			var geoV3 = (Vert)CurrentGeo.Verts[(object)(v3.Idx)];
-			if (geoV3 == null)
+			if (!currentGeo.Verts.TryGetValue(v3.Idx, out geoV3))
 			{
-				geoV3 = (Vert)v3.Clone();
-				CurrentGeo.AddVert(geoV3.Idx, geoV3);
+				geoV3 = new Vert(v3.X, v3.Y, v3.Z, v3.Idx);
+				currentGeo.AddVert(geoV3.Idx, geoV3);
 			}
 
-			var geoV4 = (Vert)CurrentGeo.Verts[(object)(v4.Idx)];
-			if (geoV4 == null)
+			if (!currentGeo.Verts.TryGetValue(v4.Idx, out geoV4))
 			{
-				geoV4 = (Vert)v4.Clone();
-				CurrentGeo.AddVert(geoV4.Idx, geoV4);
+				geoV4 = new Vert(v4.X, v4.Y, v4.Z, v4.Idx);
+				currentGeo.AddVert(geoV4.Idx, geoV4);
 			}
 
-			CurrentGeo.Faces.Add(new Face3(geoV1, geoV2, geoV4));
-			CurrentGeo.Faces.Add(new Face3(geoV2, geoV3, geoV4));
+
+			currentGeo.Faces.Add(new Face3(geoV1, geoV2, geoV4));
+			currentGeo.Faces.Add(new Face3(geoV2, geoV3, geoV4));
 		}
 
 		private void AddGeoUVs(UV uv1, UV uv2, UV uv3, UV uv4)
 		{
-			var geoUv1 = (UV)CurrentGeo.UVs[(object)(uv1.Idx)];
-			if (geoUv1 == null)
+			UV geoUv1;
+			UV geoUv2;
+			UV geoUv3;
+			UV geoUv4;
+
+			if (!currentGeo.UVs.TryGetValue(uv1.Idx, out geoUv1))
 			{
-				geoUv1 = (UV)uv1.Clone();
-				CurrentGeo.AddUV(geoUv1.Idx, geoUv1);
+				geoUv1 = new UV(uv1.X, uv1.Y, uv1.Idx);
+				currentGeo.UVs.Add(geoUv1.Idx, geoUv1);
 			}
 
-			var geoUv2 = (UV)CurrentGeo.UVs[(object)(uv2.Idx)];
-			if (geoUv2 == null)
+			if (!currentGeo.UVs.TryGetValue(uv2.Idx, out geoUv2))
 			{
-				geoUv2 = (UV)uv2.Clone();
-				CurrentGeo.AddUV(geoUv2.Idx, geoUv2);
+				geoUv2 = new UV(uv2.X, uv2.Y, uv2.Idx);
+				currentGeo.AddUv(geoUv2.Idx, geoUv2);
 			}
 
-			var geoUv3 = (UV)CurrentGeo.UVs[(object)(uv3.Idx)];
-			if (geoUv3 == null)
+			if (!currentGeo.UVs.TryGetValue(uv3.Idx, out geoUv3))
 			{
-				geoUv3 = (UV)uv3.Clone();
-				CurrentGeo.AddUV(geoUv3.Idx, geoUv3);
+				geoUv3 = new UV(uv3.X, uv3.Y, uv3.Idx);
+				currentGeo.AddUv(geoUv3.Idx, geoUv3);
 			}
 
-			var geoUv4 = (UV)CurrentGeo.UVs[(object)(uv4.Idx)];
-			if (geoUv4 == null)
+			if (!currentGeo.UVs.TryGetValue(uv4.Idx, out geoUv4))
 			{
-				geoUv4 = (UV)uv4.Clone();
-				CurrentGeo.AddUV(geoUv4.Idx, geoUv4);
+				geoUv4 = new UV(uv4.X, uv4.Y, uv4.Idx);
+				currentGeo.AddUv(geoUv4.Idx, geoUv4);
 			}
 
-			CurrentGeo.FaceVertexUVs.Add(new FaceVertexUV(geoUv1, geoUv2, geoUv4));
-			CurrentGeo.FaceVertexUVs.Add(new FaceVertexUV(geoUv2, geoUv3, geoUv4));
+			currentGeo.FaceVertexUVs.Add(new FaceVertexUV(geoUv1, geoUv2, geoUv4));
+			currentGeo.FaceVertexUVs.Add(new FaceVertexUV(geoUv2, geoUv3, geoUv4));
 		}
+
+		private void SetCurrentChunkGeo(Vert[] faceVerts)
+		{
+			var chunkXy = GetChunkKey(faceVerts);
+			var chunkKey = chunkXy.X + "_" + chunkXy.Y;
+
+			// set current chunk
+			if (!Chunks.TryGetValue(chunkKey, out currentChunk))
+			{
+				currentChunk = new Chunk(chunkXy.X, chunkXy.Y);
+				Chunks.Add(chunkKey, currentChunk);
+			}
+
+			if (currentChunk.Geos.TryGetValue(currentMaterial, out currentGeo)) return;
+
+			currentGeo = new Geo(currentMaterial);
+			currentChunk.Geos.Add(currentMaterial, currentGeo);
+		}
+
+		private ChunkXy GetChunkKey(Vert[] faceVerts)
+		{
+
+			var chunkX = int.MinValue;
+			var chunkY = int.MinValue;
+
+			foreach (var vert in faceVerts)
+			{
+				var vertX = Convert.ToInt32(Math.Floor((vert.X - 10) / 16 / 10));
+				var vertY = Convert.ToInt32(Math.Floor((vert.Z - 10) / 16 / 10));
+
+				if (vertX > chunkX) chunkX = vertX;
+				if (vertY > chunkY) chunkY = vertY;
+			}
+
+			return new ChunkXy(chunkX, chunkY);
+		}
+	}
+
+	class ChunkXy
+	{
+		public ChunkXy(int chunkX, int chunkY)
+		{
+			X = chunkX;
+			Y = chunkY;
+		}
+
+		public int X { get; set; }
+		public int Y { get; set; }
 	}
 }

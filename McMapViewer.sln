@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCMapExporter", "MCMapExpor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapExport", "MapExport\MapExport.csproj", "{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McExportUnitTests", "McExportUnitTests\McExportUnitTests.csproj", "{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

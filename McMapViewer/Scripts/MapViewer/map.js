@@ -96,6 +96,9 @@ function DisplayMapList() {
 	});
 
 }
+
+
+
 function GetMaps() {
 	$.getJSON("/map/get", function (_maps) {
 		window.mapViewer.maps = _maps;

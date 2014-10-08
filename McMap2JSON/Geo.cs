@@ -6,7 +6,7 @@ using System.Text;
 
 namespace McMap2JSON
 {
-	public partial class Geo
+	public class Geo
 	{
 		private int uvCount = 0;
 		private int vCount = 0;
@@ -14,15 +14,15 @@ namespace McMap2JSON
 		public string Name { get; set; }
 		public List<Face3> Faces { get; set; }
 		public List<FaceVertexUV> FaceVertexUVs { get; set; }
-		public OrderedDictionary Verts { get; set; }
-		public OrderedDictionary UVs { get; set; }
+		public Dictionary<int,Vert> Verts { get; set; }
+		public Dictionary<int, UV> UVs { get; set; }
 
 
 		public Geo(string name)
 		{
 			Name = name;
-			Verts = new OrderedDictionary();
-			UVs = new OrderedDictionary();
+			Verts = new Dictionary<int, Vert>();
+			UVs = new Dictionary<int, UV>();
 
 			FaceVertexUVs = new List<FaceVertexUV>();
 			Faces = new List<Face3>();
@@ -32,12 +32,12 @@ namespace McMap2JSON
 		{
 			var json = "";
 			
-			var uvJson = GetUVString();
+			var uvJson = GetUvString();
 			var vertJson = GetVertString();
 			var faceJson = GetFaceString();
 
 			if(uvJson != "" && vertJson != "" && faceJson != "")
-				json = @"{""name"":""" + this.Name + @""", ""vertices"": [" + vertJson + @"], ""uvs"": [" + uvJson + @"], ""faces"": [" + faceJson + @"]}";
+				json = string.Format(@"{{""name"":""{0}"", ""vertices"": [{1}], ""uvs"": [{2}], ""faces"": [{3}]}}", this.Name, vertJson, uvJson, faceJson);
 
 			return json;
 		}
@@ -50,7 +50,7 @@ namespace McMap2JSON
 			Verts.Add(key, vert);
 		}
 		
-		public void AddUV(int key, UV uv)
+		public void AddUv(int key, UV uv)
 		{
 			uvCount++;
 
@@ -62,7 +62,7 @@ namespace McMap2JSON
 		// build out vert json string
 		private string GetVertString()
 		{
-			var vertStringArr = (from Vert vert in Verts.Values select vert.ToString()).ToList();
+			var vertStringArr = (Verts.Values.Cast<Vert>().Select(vert => vert.ToString())).ToList();
 			var json = String.Join(",", vertStringArr);
 			
 			return json;
@@ -70,7 +70,7 @@ namespace McMap2JSON
 
 
 		// build out facevertex UV json string
-		private string GetUVString()
+		private string GetUvString()
 		{
 			var fvUvStringArr = FaceVertexUVs.Select(uv => uv.ToString()).ToList();
 			var json = String.Join(",", fvUvStringArr);

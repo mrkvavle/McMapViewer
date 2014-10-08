@@ -8,7 +8,7 @@ function MapViewer() {
 	that.scene;
 	that.renderer;
 	that.sceneLoaded;
-
+	that.texturePack = "_default";
 	that.time = Date.now();
 	that.clock = new THREE.Clock();
 	that.meshes = {};
@@ -28,7 +28,7 @@ function MapViewer() {
 		this.d = 1000;
 	};
 
-	Materials.GetMaterials(function () {
+	Materials.GetTexturePacks(function () {
 		that.init();
 		animate();
 	});
@@ -56,9 +56,6 @@ MapViewer.prototype.setupMeshContainers = function () {
 	that.meshes.t = MeshContainer("transparent meshes");
 	that.scene.add(that.meshes.t);
 };
-
-
-
 
 MapViewer.prototype.addMeshes = function (liquid, transparent, opaque) {
 	var that = this;
@@ -110,7 +107,6 @@ MapViewer.prototype.initStats = function () {
 	$('#stats').append(that.stats.domElement);
 }
 
-
 MapViewer.prototype.onWindowResize = function () {
 	var that = this;
 	that.camera.aspect = window.innerWidth / window.innerHeight;
@@ -118,7 +114,6 @@ MapViewer.prototype.onWindowResize = function () {
 	that.renderer.setSize(window.innerWidth, window.innerHeight);
 	that.controls.handleResize();
 }
-
 
 MapViewer.prototype.GetMapBoundingBox = function () {
 	var that = this;
@@ -208,6 +203,8 @@ MapViewer.prototype.GetMaterialBoundingBox = function (material) {
 
 	return bounds;
 }
+
+
 
 function animate() {
 	var that = this;

@@ -6,22 +6,17 @@ using System.Text;
 
 namespace McMap2JSON
 {
-	public class UV : ICloneable
+	public class UV
 	{
-		public string X;
-		public string Y;
+		public float X;
+		public float Y;
 		public int Idx;
 
-		public UV(string x, string y, int idx)
+		public UV(float x, float y, int idx)
 		{
 			X = x;
 			Y = y;
 			Idx = idx;
-		}
-
-		public object Clone() 
-		{
-			return this.MemberwiseClone();
 		}
 
 		public override string ToString()

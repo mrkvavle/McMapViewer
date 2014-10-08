@@ -86,13 +86,13 @@ namespace McMap2JSON
 	//		return uvs;
 	//	}
 	//
-	//	public override string ToString()
+	//	public override string ToJson()
 	//	{
 	//		var str =
-	//			f1.ToString() + "/vt " + u1.ToString() + "; " +
-	//			f2.ToString() + "/vt " + u2.ToString() + "; " +
-	//			f3.ToString() + "/vt " + u3.ToString() + "; " +
-	//			f4.ToString() + "/vt " + u4.ToString();
+	//			f1.ToJson() + "/vt " + u1.ToJson() + "; " +
+	//			f2.ToJson() + "/vt " + u2.ToJson() + "; " +
+	//			f3.ToJson() + "/vt " + u3.ToJson() + "; " +
+	//			f4.ToJson() + "/vt " + u4.ToJson();
 	//
 	//		return str;
 	//	}

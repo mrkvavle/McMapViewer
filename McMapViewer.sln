@@ -7,13 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMapViewer", "McMapViewer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeServer", "McMapViewer\Node\NodeServer.csproj", "{0B56C0C1-5EE8-4F8D-905D-012141184BB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMap2JSON", "McMap2JSON\McMap2JSON.csproj", "{EC1B8260-D63D-43E4-B63C-FD9A732F44EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMap2Json", "McMap2JSON\McMap2Json.csproj", "{EC1B8260-D63D-43E4-B63C-FD9A732F44EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCMapExporter", "MCMapExporter\MCMapExporter.csproj", "{2AB40061-FFC3-45E1-8DC0-22AFDCDA3101}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapExport", "MapExport\MapExport.csproj", "{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McExportUnitTests", "McExportUnitTests\McExportUnitTests.csproj", "{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMap2Obj", "McMap2Obj\McMap2Obj.csproj", "{6ADE220C-9280-4F05-9060-93831E2581E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C07A0AF5-A476-4D12-BA5F-6D076A3340F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADE220C-9280-4F05-9060-93831E2581E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADE220C-9280-4F05-9060-93831E2581E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADE220C-9280-4F05-9060-93831E2581E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADE220C-9280-4F05-9060-93831E2581E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

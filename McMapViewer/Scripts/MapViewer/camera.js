@@ -1,6 +1,6 @@
 ﻿/// <reference path="/js/libraries/three.js" />
 function initCamera() {
-	window.mapViewer.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100000);
+	window.mapViewer.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100000);
 	window.mapViewer.camera.position.set(85, 100, -23);
 	window.mapViewer.camera.position.y = 1500;
 }

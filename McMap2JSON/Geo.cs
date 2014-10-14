@@ -72,7 +72,7 @@ namespace McMap2JSON
 		// build out facevertex UV json string
 		private string GetUvString()
 		{
-			var fvUvStringArr = FaceVertexUVs.Select(uv => uv.ToString()).ToList();
+			var fvUvStringArr = FaceVertexUVs.Select(fvUv => fvUv.ToString()).ToList();
 			var json = String.Join(",", fvUvStringArr);
 
 			return json;

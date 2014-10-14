@@ -13,7 +13,7 @@ private static void ExportTexturePack(string texurePackFile)
 {
 var texDir = @"A:\Code\McMapViewer\McMapViewer\TexturePacks";
 	var foldername = Path.GetFileNameWithoutExtension(texurePackFile).Replace(" ", String.Empty);
-	var cmdString = String.Format(@"/c java -jar A:\Code\Kurtis\Renders\jMC2Obj\jmc2obj.jar ""{0}"" --output=""{0}"" --export=tex --texturepack=""{1}"" --texturescale=10", Path.Combine(texDir,foldername), texurePackFile);
+	var cmdString = String.Format(@"/c java -jar A:\Code\Kurtis\Renders\jMC2Obj\jmc2obj.jar ""{0}"" --output=""{0}"" --export=tex --texturepack=""{1}"" --texturescale=1", Path.Combine(texDir,foldername), texurePackFile);
 	//texurePackFile.Dump();
 	var cmd = new Process
 	{
@@ -36,5 +36,3 @@ cmdString.Dump();
 
 	//Directory.Move(@"A:\Code\McMapViewer\McMapViewer\TexturePacks\tex",Path.Combine(@"A:\Code\McMapViewer\McMapViewer\TexturePacks\",foldername));
 }
-
-

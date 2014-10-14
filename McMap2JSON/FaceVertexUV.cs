@@ -20,7 +20,7 @@ namespace McMap2JSON
 
 		public override string ToString()
 		{
-			return string.Format("[{0}, {1}, {2}]", A, B, C);
+			return string.Format("[{0}, {1}, {2}]", A.Value, B.Value, C.Value);
 		}
 	}
 }

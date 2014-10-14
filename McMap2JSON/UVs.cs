@@ -11,12 +11,13 @@ namespace McMap2JSON
 		public float X;
 		public float Y;
 		public int Idx;
-
+		public string Value;
 		public UV(float x, float y, int idx)
 		{
 			X = x;
 			Y = y;
 			Idx = idx;
+			Value = this.ToString();
 		}
 
 		public override string ToString()

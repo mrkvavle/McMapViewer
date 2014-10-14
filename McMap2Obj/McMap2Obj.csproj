@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1F063E3-FD8F-4B73-9B1B-05DDBE024CC0}</ProjectGuid>
+    <ProjectGuid>{6ADE220C-9280-4F05-9060-93831E2581E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary1</RootNamespace>
-    <AssemblyName>ClassLibrary1</AssemblyName>
+    <RootNamespace>McMap2Obj</RootNamespace>
+    <AssemblyName>McMap2Obj</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,18 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapExportUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\McMap2JSON\McMap2Json.csproj">
-      <Project>{ec1b8260-d63d-43e4-b63c-fd9a732f44ee}</Project>
-      <Name>McMap2Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\McMap2Obj\McMap2Obj.csproj">
-      <Project>{6ade220c-9280-4f05-9060-93831e2581e7}</Project>
-      <Name>McMap2Obj</Name>
-    </ProjectReference>
+    <Compile Include="Region2OBJ.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

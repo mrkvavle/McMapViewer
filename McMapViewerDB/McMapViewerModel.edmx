@@ -1,0 +1,719 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="McMapViewerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chunks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="X" Type="int" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="MapRevisionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Faces">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="VertA" Type="int" Nullable="false" />
+          <Property Name="VertB" Type="int" Nullable="false" />
+          <Property Name="VertC" Type="int" Nullable="false" />
+          <Property Name="GeometryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FaceVertexUVs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FaceID" Type="int" Nullable="false" />
+          <Property Name="UvA" Type="int" Nullable="false" />
+          <Property Name="UvB" Type="int" Nullable="false" />
+          <Property Name="UvC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Geometries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ChunkID" Type="int" Nullable="false" />
+          <Property Name="MaterialID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MapRevision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="MapID" Type="int" Nullable="false" />
+          <Property Name="IsActiveMap" Type="bit" />
+        </EntityType>
+        <EntityType Name="Maps">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UVs">
+          <Key>
+            <PropertyRef Name="MapRevisionID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="MapRevisionID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="X" Type="float" Nullable="false" />
+          <Property Name="Y" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verts">
+          <Key>
+            <PropertyRef Name="MapRevisionID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="MapRevisionID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="X" Type="real" Nullable="false" />
+          <Property Name="Y" Type="real" Nullable="false" />
+          <Property Name="Z" Type="real" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Chunks_MapRevision">
+          <End Role="MapRevision" Type="Self.MapRevision" Multiplicity="1" />
+          <End Role="Chunks" Type="Self.Chunks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MapRevision">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Chunks">
+              <PropertyRef Name="MapRevisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Faces_Geometries">
+          <End Role="Geometries" Type="Self.Geometries" Multiplicity="1" />
+          <End Role="Faces" Type="Self.Faces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Geometries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Faces">
+              <PropertyRef Name="GeometryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceVertexUVs_Faces">
+          <End Role="Faces" Type="Self.Faces" Multiplicity="1" />
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUVs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FaceVertexUVs">
+              <PropertyRef Name="FaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geometries_Chunks">
+          <End Role="Chunks" Type="Self.Chunks" Multiplicity="1" />
+          <End Role="Geometries" Type="Self.Geometries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chunks">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Geometries">
+              <PropertyRef Name="ChunkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geometries_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Geometries" Type="Self.Geometries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Geometries">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MapRevision_Maps">
+          <End Role="Maps" Type="Self.Maps" Multiplicity="1" />
+          <End Role="MapRevision" Type="Self.MapRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MapRevision">
+              <PropertyRef Name="MapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUVs" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UVs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs1">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUVs" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UVs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs2">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUVs" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UVs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces">
+          <End Role="Faces" Type="Self.Faces" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Verts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces1">
+          <End Role="Faces" Type="Self.Faces" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Verts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces2">
+          <End Role="Faces" Type="Self.Faces" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Verts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="McMapViewerModelStoreContainer">
+          <EntitySet Name="Chunks" EntityType="Self.Chunks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faces" EntityType="Self.Faces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FaceVertexUVs" EntityType="Self.FaceVertexUVs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Geometries" EntityType="Self.Geometries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapRevision" EntityType="Self.MapRevision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maps" EntityType="Self.Maps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UVs" EntityType="Self.UVs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verts" EntityType="Self.Verts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chunks_MapRevision" Association="Self.FK_Chunks_MapRevision">
+            <End Role="MapRevision" EntitySet="MapRevision" />
+            <End Role="Chunks" EntitySet="Chunks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Faces_Geometries" Association="Self.FK_Faces_Geometries">
+            <End Role="Geometries" EntitySet="Geometries" />
+            <End Role="Faces" EntitySet="Faces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceVertexUVs_Faces" Association="Self.FK_FaceVertexUVs_Faces">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geometries_Chunks" Association="Self.FK_Geometries_Chunks">
+            <End Role="Chunks" EntitySet="Chunks" />
+            <End Role="Geometries" EntitySet="Geometries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geometries_Materials" Association="Self.FK_Geometries_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Geometries" EntitySet="Geometries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MapRevision_Maps" Association="Self.FK_MapRevision_Maps">
+            <End Role="Maps" EntitySet="Maps" />
+            <End Role="MapRevision" EntitySet="MapRevision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs" Association="Self.FK_UVs_FaceVertexUVs">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs1" Association="Self.FK_UVs_FaceVertexUVs1">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs2" Association="Self.FK_UVs_FaceVertexUVs2">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces" Association="Self.FK_Verts_Faces">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces1" Association="Self.FK_Verts_Faces1">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces2" Association="Self.FK_Verts_Faces2">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="McMapViewerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chunk">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="X" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="MapRevisionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MapRevision" Relationship="Self.FK_Chunks_MapRevision" FromRole="Chunks" ToRole="MapRevision" />
+          <NavigationProperty Name="Geometries" Relationship="Self.FK_Geometries_Chunks" FromRole="Chunks" ToRole="Geometries" />
+        </EntityType>
+        <EntityType Name="Face">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="VertA" Type="Int32" Nullable="false" />
+          <Property Name="VertB" Type="Int32" Nullable="false" />
+          <Property Name="VertC" Type="Int32" Nullable="false" />
+          <Property Name="GeometryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Geometry" Relationship="Self.FK_Faces_Geometries" FromRole="Faces" ToRole="Geometries" />
+          <NavigationProperty Name="FaceVertexUVs" Relationship="Self.FK_FaceVertexUVs_Faces" FromRole="Faces" ToRole="FaceVertexUVs" />
+          <NavigationProperty Name="Verts" Relationship="Self.FK_Verts_Faces" FromRole="Faces" ToRole="Verts" />
+          <NavigationProperty Name="Verts1" Relationship="Self.FK_Verts_Faces1" FromRole="Faces" ToRole="Verts" />
+          <NavigationProperty Name="Verts2" Relationship="Self.FK_Verts_Faces2" FromRole="Faces" ToRole="Verts" />
+        </EntityType>
+        <EntityType Name="FaceVertexUV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FaceID" Type="Int32" Nullable="false" />
+          <Property Name="UvA" Type="Int32" Nullable="false" />
+          <Property Name="UvB" Type="Int32" Nullable="false" />
+          <Property Name="UvC" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Face" Relationship="Self.FK_FaceVertexUVs_Faces" FromRole="FaceVertexUVs" ToRole="Faces" />
+          <NavigationProperty Name="UVs" Relationship="Self.FK_UVs_FaceVertexUVs" FromRole="FaceVertexUVs" ToRole="UVs" />
+          <NavigationProperty Name="UVs1" Relationship="Self.FK_UVs_FaceVertexUVs1" FromRole="FaceVertexUVs" ToRole="UVs" />
+          <NavigationProperty Name="UVs2" Relationship="Self.FK_UVs_FaceVertexUVs2" FromRole="FaceVertexUVs" ToRole="UVs" />
+        </EntityType>
+        <EntityType Name="Geometry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ChunkID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Chunk" Relationship="Self.FK_Geometries_Chunks" FromRole="Geometries" ToRole="Chunks" />
+          <NavigationProperty Name="Faces" Relationship="Self.FK_Faces_Geometries" FromRole="Geometries" ToRole="Faces" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Geometries_Materials" FromRole="Geometries" ToRole="Materials" />
+        </EntityType>
+        <EntityType Name="MapRevision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MapID" Type="Int32" Nullable="false" />
+          <Property Name="IsActiveMap" Type="Boolean" />
+          <NavigationProperty Name="Chunks" Relationship="Self.FK_Chunks_MapRevision" FromRole="MapRevision" ToRole="Chunks" />
+          <NavigationProperty Name="Map" Relationship="Self.FK_MapRevision_Maps" FromRole="MapRevision" ToRole="Maps" />
+        </EntityType>
+        <EntityType Name="Map">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MapRevisions" Relationship="Self.FK_MapRevision_Maps" FromRole="Maps" ToRole="MapRevision" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Geometries" Relationship="Self.FK_Geometries_Materials" FromRole="Materials" ToRole="Geometries" />
+        </EntityType>
+        <EntityType Name="UV">
+          <Key>
+            <PropertyRef Name="MapRevisionID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="MapRevisionID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="X" Type="Double" Nullable="false" />
+          <Property Name="Y" Type="Double" Nullable="false" />
+          <NavigationProperty Name="FaceVertexUV" Relationship="Self.FK_UVs_FaceVertexUVs" FromRole="UVs" ToRole="FaceVertexUVs" />
+          <NavigationProperty Name="FaceVertexUV1" Relationship="Self.FK_UVs_FaceVertexUVs1" FromRole="UVs" ToRole="FaceVertexUVs" />
+          <NavigationProperty Name="FaceVertexUV2" Relationship="Self.FK_UVs_FaceVertexUVs2" FromRole="UVs" ToRole="FaceVertexUVs" />
+        </EntityType>
+        <EntityType Name="Vert">
+          <Key>
+            <PropertyRef Name="MapRevisionID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="MapRevisionID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="X" Type="Single" Nullable="false" />
+          <Property Name="Y" Type="Single" Nullable="false" />
+          <Property Name="Z" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Face" Relationship="Self.FK_Verts_Faces" FromRole="Verts" ToRole="Faces" />
+          <NavigationProperty Name="Face1" Relationship="Self.FK_Verts_Faces1" FromRole="Verts" ToRole="Faces" />
+          <NavigationProperty Name="Face2" Relationship="Self.FK_Verts_Faces2" FromRole="Verts" ToRole="Faces" />
+        </EntityType>
+        <Association Name="FK_Chunks_MapRevision">
+          <End Role="MapRevision" Type="Self.MapRevision" Multiplicity="1" />
+          <End Role="Chunks" Type="Self.Chunk" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MapRevision">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Chunks">
+              <PropertyRef Name="MapRevisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geometries_Chunks">
+          <End Role="Chunks" Type="Self.Chunk" Multiplicity="1" />
+          <End Role="Geometries" Type="Self.Geometry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chunks">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Geometries">
+              <PropertyRef Name="ChunkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Faces_Geometries">
+          <End Role="Geometries" Type="Self.Geometry" Multiplicity="1" />
+          <End Role="Faces" Type="Self.Face" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Geometries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Faces">
+              <PropertyRef Name="GeometryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FaceVertexUVs_Faces">
+          <End Role="Faces" Type="Self.Face" Multiplicity="1" />
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FaceVertexUVs">
+              <PropertyRef Name="FaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces">
+          <End Role="Faces" Type="Self.Face" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Vert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces1">
+          <End Role="Faces" Type="Self.Face" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Vert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Verts_Faces2">
+          <End Role="Faces" Type="Self.Face" Multiplicity="1" />
+          <End Role="Verts" Type="Self.Vert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faces">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Verts">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUV" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs1">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUV" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UVs_FaceVertexUVs2">
+          <End Role="FaceVertexUVs" Type="Self.FaceVertexUV" Multiplicity="1" />
+          <End Role="UVs" Type="Self.UV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FaceVertexUVs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UVs">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Geometries_Materials">
+          <End Role="Materials" Type="Self.Material" Multiplicity="1" />
+          <End Role="Geometries" Type="Self.Geometry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Geometries">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MapRevision_Maps">
+          <End Role="Maps" Type="Self.Map" Multiplicity="1" />
+          <End Role="MapRevision" Type="Self.MapRevision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MapRevision">
+              <PropertyRef Name="MapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="McMapViewerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chunks" EntityType="Self.Chunk" />
+          <EntitySet Name="Faces" EntityType="Self.Face" />
+          <EntitySet Name="FaceVertexUVs" EntityType="Self.FaceVertexUV" />
+          <EntitySet Name="Geometries" EntityType="Self.Geometry" />
+          <EntitySet Name="MapRevisions" EntityType="Self.MapRevision" />
+          <EntitySet Name="Maps" EntityType="Self.Map" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="UVs" EntityType="Self.UV" />
+          <EntitySet Name="Verts" EntityType="Self.Vert" />
+          <AssociationSet Name="FK_Chunks_MapRevision" Association="Self.FK_Chunks_MapRevision">
+            <End Role="MapRevision" EntitySet="MapRevisions" />
+            <End Role="Chunks" EntitySet="Chunks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geometries_Chunks" Association="Self.FK_Geometries_Chunks">
+            <End Role="Chunks" EntitySet="Chunks" />
+            <End Role="Geometries" EntitySet="Geometries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Faces_Geometries" Association="Self.FK_Faces_Geometries">
+            <End Role="Geometries" EntitySet="Geometries" />
+            <End Role="Faces" EntitySet="Faces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FaceVertexUVs_Faces" Association="Self.FK_FaceVertexUVs_Faces">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces" Association="Self.FK_Verts_Faces">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces1" Association="Self.FK_Verts_Faces1">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verts_Faces2" Association="Self.FK_Verts_Faces2">
+            <End Role="Faces" EntitySet="Faces" />
+            <End Role="Verts" EntitySet="Verts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs" Association="Self.FK_UVs_FaceVertexUVs">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs1" Association="Self.FK_UVs_FaceVertexUVs1">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UVs_FaceVertexUVs2" Association="Self.FK_UVs_FaceVertexUVs2">
+            <End Role="FaceVertexUVs" EntitySet="FaceVertexUVs" />
+            <End Role="UVs" EntitySet="UVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Geometries_Materials" Association="Self.FK_Geometries_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Geometries" EntitySet="Geometries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MapRevision_Maps" Association="Self.FK_MapRevision_Maps">
+            <End Role="Maps" EntitySet="Maps" />
+            <End Role="MapRevision" EntitySet="MapRevisions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="McMapViewerModelStoreContainer" CdmEntityContainer="McMapViewerEntities">
+          <EntitySetMapping Name="Chunks">
+            <EntityTypeMapping TypeName="McMapViewerModel.Chunk">
+              <MappingFragment StoreEntitySet="Chunks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="MapRevisionID" ColumnName="MapRevisionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faces">
+            <EntityTypeMapping TypeName="McMapViewerModel.Face">
+              <MappingFragment StoreEntitySet="Faces">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VertA" ColumnName="VertA" />
+                <ScalarProperty Name="VertB" ColumnName="VertB" />
+                <ScalarProperty Name="VertC" ColumnName="VertC" />
+                <ScalarProperty Name="GeometryID" ColumnName="GeometryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FaceVertexUVs">
+            <EntityTypeMapping TypeName="McMapViewerModel.FaceVertexUV">
+              <MappingFragment StoreEntitySet="FaceVertexUVs">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FaceID" ColumnName="FaceID" />
+                <ScalarProperty Name="UvA" ColumnName="UvA" />
+                <ScalarProperty Name="UvB" ColumnName="UvB" />
+                <ScalarProperty Name="UvC" ColumnName="UvC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Geometries">
+            <EntityTypeMapping TypeName="McMapViewerModel.Geometry">
+              <MappingFragment StoreEntitySet="Geometries">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ChunkID" ColumnName="ChunkID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapRevisions">
+            <EntityTypeMapping TypeName="McMapViewerModel.MapRevision">
+              <MappingFragment StoreEntitySet="MapRevision">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MapID" ColumnName="MapID" />
+                <ScalarProperty Name="IsActiveMap" ColumnName="IsActiveMap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maps">
+            <EntityTypeMapping TypeName="McMapViewerModel.Map">
+              <MappingFragment StoreEntitySet="Maps">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="McMapViewerModel.Material">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UVs">
+            <EntityTypeMapping TypeName="McMapViewerModel.UV">
+              <MappingFragment StoreEntitySet="UVs">
+                <ScalarProperty Name="MapRevisionID" ColumnName="MapRevisionID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verts">
+            <EntityTypeMapping TypeName="McMapViewerModel.Vert">
+              <MappingFragment StoreEntitySet="Verts">
+                <ScalarProperty Name="MapRevisionID" ColumnName="MapRevisionID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

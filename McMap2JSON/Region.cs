@@ -25,8 +25,8 @@ namespace McMap2JSON
 		public Region(string filename)
 		{
 			string line;
-			if(!File.Exists(filename)) return;
-			
+			if (!File.Exists(filename)) return;
+
 			using (var reader = File.OpenText(filename))
 			{
 				while ((line = reader.ReadLine()) != null)
@@ -38,49 +38,46 @@ namespace McMap2JSON
 			// add last geo 
 			HandleMtl(null, true);
 		}
+
 		private void HandleLine(string line)
 		{
+			// catch empty strings
+			if (line == "") return;
 
-			var lineArray = line.Split(new Char[] { ' ', '/' }).ToList();
-			switch (lineArray[0])
-			{
-				case "v":
-					HandleVertex(lineArray);
-					break;
-				case "vt":
-					HandleUv(lineArray);
-					break;
-				case "usemtl":
-					HandleMtl(lineArray, false);
-					break;
-				case "f":
-					HandleFace(lineArray);
-					break;
-			}
+			var lineArray = line.Split(new Char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+			var firstWord = lineArray[0];
+
+			if (firstWord == "v")
+				HandleVertex(lineArray);
+			else if (firstWord == "vt")
+				HandleUv(lineArray);
+			else if (firstWord == "usemtl")
+				HandleMtl(lineArray, false);
+			else if (firstWord == "f")
+				HandleFace(line);
 		}
 
-		private void HandleMtl(List<string> line, Boolean lastGeo)
+		private void HandleMtl(string[] line, Boolean lastGeo)
 		{
 			if (line != null)
 				currentMaterial = line[1];
 		}
 
-		private void HandleVertex(List<string> line)
+		private void HandleVertex(string[] line)
 		{
 			// ["v 1.0 2.0 3.0", "1.0", "2.0", "3.0"]
-			verts.Add(
-				vertKey,
-				new Vert(
-					Convert.ToDouble(line[1]),
-					Convert.ToDouble(line[2]),
-					Convert.ToDouble(line[3]),
-					vertKey
-				)
-			);
+			if(line.Length < 4) return;
+
+			double d1, d2, d3;
+
+			if (!Double.TryParse(line[1], out d1) || !Double.TryParse(line[2], out d2) || !Double.TryParse(line[3], out d3))
+				return;
+			
+			verts.Add(vertKey, new Vert(d1, d2, d3, vertKey));
 			vertKey += 1;
 		}
 
-		private void HandleUv(List<string> line)
+		private void HandleUv(string[] line)
 		{
 			// ["vt 0.1 0.2", "0.1", "0.2"]
 			uvs.Add(
@@ -95,25 +92,36 @@ namespace McMap2JSON
 			uvKey += 1;
 		}
 
-		private void HandleFace(List<string> line)
+		private void HandleFace(string line)
 		{
-			// [lineArray[1], lineArray[3], lineArray[5], lineArray[7]], //faces
-			var v1 = verts[Convert.ToInt32(line[1])];
-			var v2 = verts[Convert.ToInt32(line[3])];
-			var v3 = verts[Convert.ToInt32(line[5])];
-			var v4 = verts[Convert.ToInt32(line[7])];
+			var arr = line.Split(new Char[] {' ', '/'}, StringSplitOptions.RemoveEmptyEntries);
 
+			// [lineArray[1], lineArray[3], lineArray[5], lineArray[7]], //faces
+			if (arr.Length < 9) return;
+
+			Vert v1, v2, v3, v4;
+			
+			verts.TryGetValue(Convert.ToInt32(arr[1]), out v1);
+			verts.TryGetValue(Convert.ToInt32(arr[3]), out v2);
+			verts.TryGetValue(Convert.ToInt32(arr[5]), out v3);
+			verts.TryGetValue(Convert.ToInt32(arr[7]), out v4);
+			
+			// [lineArray[2], lineArray[4], lineArray[6], lineArray[8]] //uv
+
+			UV uv1 = null, uv2 = null, uv3 = null, uv4 = null;
+
+			uvs.TryGetValue(Convert.ToInt32(arr[2]), out uv1);
+			uvs.TryGetValue(Convert.ToInt32(arr[4]), out uv2);
+			uvs.TryGetValue(Convert.ToInt32(arr[6]), out uv3);
+			uvs.TryGetValue(Convert.ToInt32(arr[8]), out uv4);
+
+			// if any indexes dont exist return to avoid crashing
+			if ((new Object[] { v1, v2, v3, v4, uv1, uv2, uv3, uv4 }).Any(v => v == null)) return;
 
 			var vertArr = new Vert[4] { v1, v2, v3, v4 };
 			SetCurrentChunkGeo(vertArr);
+
 			AddGeoVerts(v1, v2, v3, v4);
-
-			// [lineArray[2], lineArray[4], lineArray[6], lineArray[8]] //uv
-			var uv1 = uvs[Convert.ToInt16(line[2])];
-			var uv2 = uvs[Convert.ToInt16(line[4])];
-			var uv3 = uvs[Convert.ToInt16(line[6])];
-			var uv4 = uvs[Convert.ToInt16(line[8])];
-
 			AddGeoUVs(uv1, uv2, uv3, uv4);
 		}
 
@@ -214,8 +222,8 @@ namespace McMap2JSON
 
 			foreach (var vert in faceVerts)
 			{
-				var vertX = Convert.ToInt32(Math.Floor((vert.X - 10) / 16 / 10));
-				var vertY = Convert.ToInt32(Math.Floor((vert.Z - 10) / 16 / 10));
+				var vertX = Convert.ToInt32(Math.Floor((vert.X) / 16 / 10));
+				var vertY = Convert.ToInt32(Math.Floor((vert.Z) / 16 / 10));
 
 				if (vertX > chunkX) chunkX = vertX;
 				if (vertY > chunkY) chunkY = vertY;

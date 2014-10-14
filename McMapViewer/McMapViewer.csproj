@@ -1019,9 +1019,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\McMap2JSON\McMap2JSON.csproj">
+    <ProjectReference Include="..\McMap2JSON\McMap2Json.csproj">
       <Project>{ec1b8260-d63d-43e4-b63c-fd9a732f44ee}</Project>
-      <Name>McMap2JSON</Name>
+      <Name>McMap2Json</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

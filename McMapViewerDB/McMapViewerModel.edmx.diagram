@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d7417fbe1d5c468baeedfe7423ced8a1" Name="Diagram1">
+        <EntityTypeShape EntityType="McMapViewerModel.Chunk" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.Face" Width="1.5" PointX="9.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.FaceVertexUV" Width="1.5" PointX="12" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.Geometry" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.MapRevision" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.Map" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.Material" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.UV" Width="1.5" PointX="14.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="McMapViewerModel.Vert" Width="1.5" PointX="12" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="McMapViewerModel.FK_Chunks_MapRevision" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Geometries_Chunks" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Faces_Geometries" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_FaceVertexUVs_Faces" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Verts_Faces" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Verts_Faces1" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Verts_Faces2" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_UVs_FaceVertexUVs" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_UVs_FaceVertexUVs1" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_UVs_FaceVertexUVs2" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_Geometries_Materials" ManuallyRouted="false" />
+        <AssociationConnector Association="McMapViewerModel.FK_MapRevision_Maps" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

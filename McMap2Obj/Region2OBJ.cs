@@ -5,21 +5,21 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 
-namespace MapExport
+namespace McMap2Obj
 {
 	public static class Region2Obj
 	{
 		private const int BlocksPerRegion = 512;
-		private const byte RegionDivisions = 2;
+		private const byte RegionDivisions = 1;
 
-		public static List<string> ExportRegion(string mapName, int regionX, int regionY, string regionFileDirectory, string outputMapDirectory)
+		public static List<string> ExportRegion(string mapName, int regionX, int regionY, string regionFileDirectory, string exportDir)
 		{
 			var importDir = Directory.GetParent(regionFileDirectory).FullName;
-			var exportDir = Path.Combine(outputMapDirectory, mapName);
-
+			
 			if (!Directory.Exists(exportDir))
 				Directory.CreateDirectory(exportDir);
 
@@ -36,9 +36,9 @@ namespace MapExport
 				var y = part[1];
 
 				var x1 = getCoord(x, regionX);
-				var x2 = getCoord(x + 1, regionX) - 1;
+				var x2 = getCoord(x + 1, regionX);
 				var y1 = getCoord(y, regionY);
-				var y2 = getCoord(y + 1, regionY) - 1;
+				var y2 = getCoord(y + 1, regionY);
 
 				exportedFile.Add(ExportRegionPart(x1, x2, y1, y2, importDir, exportDir, mapName));
 			});
@@ -56,7 +56,7 @@ namespace MapExport
 		{
 			var objectName = string.Format("{0}_{1}_{2}_to_{3}_{4}.obj", mapName, x1, y1, x2, y2);
 
-			var cmdString = String.Format(@"/c java -jar A:\Code\Kurtis\Renders\jMC2Obj\jmc2obj.jar {0} -o {1} -a {2},{3},{4},{5} --objfile={6} --object-per-mat --offset=none --remove-dup --scale=10 --include-unknown ", importDir, exportDir, x1, y1, x2, y2, objectName); //--render-sides
+			var cmdString = String.Format(@"/c java -jar A:\Code\Kurtis\Renders\jMC2Obj\jmc2obj.jar ""{0}"" -o ""{1}"" -a {2},{3},{4},{5} --objfile=""{6}"" --object-per-mat --offset=none --remove-dup --scale=10 --include-unknown --render-sides", importDir, exportDir, x1, y1, x2, y2, objectName); //--render-sides
 
 			var cmd = new Process
 			{
